@@ -19,7 +19,7 @@ export default class Ticket extends BaseEntity{
     @Column('int')
     price: number
 
-    @Column()
+    @Column({nullable: true})
     endDate: Date
 
     @OneToMany(() => Comment, comment => comment.ticket)

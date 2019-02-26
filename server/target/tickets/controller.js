@@ -14,29 +14,49 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const entity_1 = require("./entity");
 const routing_controllers_1 = require("routing-controllers");
+const typeorm_1 = require("typeorm");
+const entity_2 = require("../events/entity");
 let TicketController = class TicketController {
-    async getTickets() {
-        const tickets = await entity_1.default.find();
-        return { tickets };
-    }
-    async createTicket(ticket) {
+    async createEventsTicket(ticket, id) {
         const ticketEntity = entity_1.default.create(ticket);
         await ticketEntity.save();
+        const events = await typeorm_1.getConnection()
+            .getRepository(entity_2.default)
+            .createQueryBuilder("event")
+            .leftJoinAndSelect("event.tickets", "ticket")
+            .where("event.id = :id", { id: id })
+            .getMany();
+        events.map(event => {
+            event.tickets = [...event.tickets, ticketEntity];
+            const eventEntity = entity_2.default.create(event);
+            eventEntity.save();
+        });
+        return events;
+    }
+    async getEventsTickets(id) {
+        const events = await typeorm_1.getConnection()
+            .getRepository(entity_2.default)
+            .createQueryBuilder("event")
+            .leftJoinAndSelect("event.tickets", "ticket")
+            .where("event.id = :id", { id: id })
+            .getMany();
+        return events;
     }
 };
 __decorate([
-    routing_controllers_1.Get('/tickets'),
+    routing_controllers_1.Post('/events/:id/tickets'),
+    __param(0, routing_controllers_1.Body()), __param(1, routing_controllers_1.Param('id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [entity_1.default, Number]),
     __metadata("design:returntype", Promise)
-], TicketController.prototype, "getTickets", null);
+], TicketController.prototype, "createEventsTicket", null);
 __decorate([
-    routing_controllers_1.Post('/tickets'),
-    __param(0, routing_controllers_1.Body()),
+    routing_controllers_1.Get('/events/:id/tickets'),
+    __param(0, routing_controllers_1.Param('id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [entity_1.default]),
+    __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
-], TicketController.prototype, "createTicket", null);
+], TicketController.prototype, "getEventsTickets", null);
 TicketController = __decorate([
     routing_controllers_1.JsonController()
 ], TicketController);
