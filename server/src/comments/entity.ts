@@ -12,7 +12,7 @@ export default class Comment extends BaseEntity {
     @Column()
     text: string
 
-    @Column()
+    @Column({nullable: true})
     createDate: Date
 
     @ManyToOne(() => Ticket, ticket => ticket.comments)

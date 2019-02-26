@@ -14,29 +14,55 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const entity_1 = require("./entity");
 const routing_controllers_1 = require("routing-controllers");
+const typeorm_1 = require("typeorm");
+const entity_2 = require("../events/entity");
 let CommentController = class CommentController {
-    async getComments() {
-        const comments = await entity_1.default.find();
-        return comments;
+    async getEventsTicketsComments(eventId, ticketId) {
+        const events = await typeorm_1.getConnection()
+            .getRepository(entity_2.default)
+            .createQueryBuilder("event")
+            .leftJoinAndSelect("event.tickets", "ticket")
+            .leftJoinAndSelect("ticket.comments", "comment")
+            .where("event.id = :eventId", { eventId })
+            .andWhere("ticket.id = :ticketId", { ticketId })
+            .getMany();
+        return events.map(event => event.tickets);
     }
-    async createComment(comment) {
+    async createEventsTicketsComments(comment, eventId, ticketId) {
         const commentEntity = entity_1.default.create(comment);
         await commentEntity.save();
+        const events = await typeorm_1.getConnection()
+            .getRepository(entity_2.default)
+            .createQueryBuilder("event")
+            .leftJoinAndSelect("event.tickets", "ticket")
+            .leftJoinAndSelect("ticket.comments", "comment")
+            .where("event.id = :eventId", { eventId })
+            .andWhere("ticket.id = :ticketId", { ticketId })
+            .getMany();
+        events.map(event => {
+            event.tickets.map(ticket => {
+                ticket.comments = [...ticket.comments, commentEntity];
+                const ticketEntity = entity_2.default.create(ticket);
+                ticketEntity.save();
+            });
+        });
+        return events.map(event => event.tickets);
     }
 };
 __decorate([
-    routing_controllers_1.Get('/comments'),
+    routing_controllers_1.Get('/events/:eventId/tickets/:ticketId/comments'),
+    __param(0, routing_controllers_1.Param('eventId')), __param(1, routing_controllers_1.Param('ticketId')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [Number, Number]),
     __metadata("design:returntype", Promise)
-], CommentController.prototype, "getComments", null);
+], CommentController.prototype, "getEventsTicketsComments", null);
 __decorate([
-    routing_controllers_1.Post('/comments'),
-    __param(0, routing_controllers_1.Body()),
+    routing_controllers_1.Post('/events/:eventId/tickets/:ticketId/comments'),
+    __param(0, routing_controllers_1.Body()), __param(1, routing_controllers_1.Param('eventId')), __param(2, routing_controllers_1.Param('ticketId')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [entity_1.default]),
+    __metadata("design:paramtypes", [entity_1.default, Number, Number]),
     __metadata("design:returntype", Promise)
-], CommentController.prototype, "createComment", null);
+], CommentController.prototype, "createEventsTicketsComments", null);
 CommentController = __decorate([
     routing_controllers_1.JsonController()
 ], CommentController);
