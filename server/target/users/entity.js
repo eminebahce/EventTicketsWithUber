@@ -32,7 +32,7 @@ __decorate([
 ], User.prototype, "id", void 0);
 __decorate([
     class_validator_1.IsEmail(),
-    typeorm_1.Column('text', { nullable: false }),
+    typeorm_1.Column('text', { nullable: true }),
     __metadata("design:type", String)
 ], User.prototype, "email", void 0);
 __decorate([

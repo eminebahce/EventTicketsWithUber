@@ -2,11 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b8787a73-ebea-4175-adda-d8ce8fdb45c6" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/server/src/comments/controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/comments/controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/db.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/db.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/events/controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/events/controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/index.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/tickets/controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/tickets/controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/target/tickets/controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/target/tickets/controller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/users/entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/users/entity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/target/db.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/target/db.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/target/db.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/server/target/db.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/target/events/controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/target/events/controller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/target/events/controller.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/server/target/events/controller.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/target/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/target/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/target/index.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/server/target/index.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/target/tickets/controller.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/server/target/tickets/controller.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/target/users/entity.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/target/users/entity.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/target/users/entity.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/server/target/users/entity.js.map" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -18,40 +28,16 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.4525">
+    <splitter split-orientation="horizontal" split-proportion="0.5111261">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/server/src/comments/entity.ts">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="72">
-                  <caret line="3" column="39" selection-start-line="3" selection-end-line="3" selection-end-column="39" />
-                  <folding>
-                    <element signature="e#0#74#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
           <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/server/src/comments/controller.ts">
+            <entry file="file://$PROJECT_DIR$/server/src/events/controller.ts">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="336">
-                  <caret line="14" column="52" selection-start-line="14" selection-start-column="52" selection-end-line="14" selection-end-column="52" />
+                <state relative-caret-position="304">
+                  <caret line="35" column="28" selection-start-line="35" selection-start-column="28" selection-end-line="35" selection-end-column="28" />
                   <folding>
-                    <element signature="e#0#31#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/server/src/tickets/controller.ts">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="24">
-                  <caret line="1" column="68" lean-forward="true" selection-start-line="1" selection-end-line="1" selection-end-column="68" />
-                  <folding>
-                    <element signature="e#0#34#0" expanded="true" />
+                    <element signature="e#72#147#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
@@ -62,12 +48,36 @@
       <split-second>
         <leaf>
           <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/server/src/events/controller.ts">
+            <entry file="file://$PROJECT_DIR$/server/src/events/entity.ts">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="24">
-                  <caret line="1" column="68" lean-forward="true" selection-start-line="1" selection-end-line="1" selection-end-column="68" />
+                <state relative-caret-position="329">
+                  <caret line="27" column="11" selection-start-line="27" selection-start-column="4" selection-end-line="27" selection-end-column="11" />
                   <folding>
-                    <element signature="e#0#29#0" expanded="true" />
+                    <element signature="e#0#85#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/server/src/db.ts">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="454">
+                  <caret line="114" lean-forward="true" selection-start-line="114" selection-end-line="114" />
+                  <folding>
+                    <element signature="e#0#40#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/server/src/users/entity.ts">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="-130">
+                  <caret line="21" column="33" selection-start-line="21" selection-start-column="33" selection-end-line="21" selection-end-column="33" />
+                  <folding>
+                    <element signature="e#0#74#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
@@ -117,7 +127,6 @@
         <option value="$PROJECT_DIR$/client/src/App.js" />
         <option value="$PROJECT_DIR$/server/src/login/controller.ts" />
         <option value="$PROJECT_DIR$/server/package.json" />
-        <option value="$PROJECT_DIR$/server/src/index.ts" />
         <option value="$PROJECT_DIR$/server/src/jwt.ts" />
         <option value="$PROJECT_DIR$/server/src/users/controller.ts" />
         <option value="$PROJECT_DIR$/server/src/Comments/entity.ts" />
@@ -125,19 +134,20 @@
         <option value="$PROJECT_DIR$/server/src/comments/entity.ts" />
         <option value="$PROJECT_DIR$/server/src/tickets/entity.ts" />
         <option value="$PROJECT_DIR$/server/src/events/entity.ts" />
+        <option value="$PROJECT_DIR$/server/src/comments/controller.ts" />
+        <option value="$PROJECT_DIR$/server/src/tickets/controller.ts" />
+        <option value="$PROJECT_DIR$/server/src/index.ts" />
         <option value="$PROJECT_DIR$/server/src/db.ts" />
         <option value="$PROJECT_DIR$/server/src/users/entity.ts" />
-        <option value="$PROJECT_DIR$/server/src/tickets/controller.ts" />
         <option value="$PROJECT_DIR$/server/src/events/controller.ts" />
-        <option value="$PROJECT_DIR$/server/src/comments/controller.ts" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="107" />
-    <option name="y" value="71" />
-    <option name="width" value="1242" />
-    <option name="height" value="1016" />
+    <option name="x" value="369" />
+    <option name="y" value="23" />
+    <option name="width" value="1773" />
+    <option name="height" value="1017" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -231,18 +241,18 @@
       <option name="presentableId" value="Default" />
       <updated>1551105683746</updated>
       <workItem from="1551105685282" duration="4376000" />
-      <workItem from="1551111270734" duration="31423000" />
+      <workItem from="1551111270734" duration="41952000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="35799000" />
+    <option name="totallyTimeSpent" value="46328000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="107" y="71" width="1242" height="1016" extended-state="0" />
+    <frame x="369" y="23" width="1773" height="1017" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.2025" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.15183246" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="DB Browser" order="2" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -258,7 +268,7 @@
       <window_info anchor="bottom" id="DB Execution Console" order="9" />
       <window_info anchor="bottom" id="Database Changes" order="10" />
       <window_info anchor="bottom" id="TypeScript" order="11" weight="0.32982087" />
-      <window_info anchor="bottom" id="Terminal" order="12" sideWeight="0.49916667" visible="true" weight="0.27753305" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="12" sideWeight="0.49916667" visible="true" weight="0.28382838" />
       <window_info anchor="bottom" id="Event Log" order="13" sideWeight="0.50083333" side_tool="true" weight="0.24669604" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -367,57 +377,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/src/db.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="26">
-          <caret line="37" column="13" lean-forward="true" selection-start-line="37" selection-start-column="13" selection-end-line="37" selection-end-column="13" />
-          <folding>
-            <element signature="e#0#40#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/src/index.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-388">
-          <caret selection-end-column="26" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/server/package.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="161">
           <caret line="22" column="32" selection-start-line="22" selection-start-column="32" selection-end-line="22" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/src/users/entity.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="648">
-          <caret line="27" lean-forward="true" selection-start-line="27" selection-end-line="27" />
-          <folding>
-            <element signature="e#0#74#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/src/users/controller.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="24">
-          <caret line="1" column="26" selection-start-line="1" selection-start-column="20" selection-end-line="1" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/src/tickets/controller.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="24">
-          <caret line="1" column="68" lean-forward="true" selection-start-line="1" selection-end-line="1" selection-end-column="68" />
-          <folding>
-            <element signature="e#0#34#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -428,13 +391,40 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/src/events/entity.ts">
+    <entry file="file://$PROJECT_DIR$/server/src/index.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="20" column="13" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
+        <state relative-caret-position="212">
+          <caret line="10" column="23" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="23" />
           <folding>
-            <element signature="e#0#85#0" expanded="true" />
+            <element signature="e#0#26#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/src/tickets/controller.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret selection-end-column="30" />
+          <folding>
+            <element signature="e#0#34#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/src/comments/controller.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="15" column="34" lean-forward="true" selection-start-line="15" selection-start-column="34" selection-end-line="15" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/src/users/controller.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="24">
+          <caret line="1" column="26" selection-start-line="1" selection-start-column="20" selection-end-line="1" selection-end-column="26" />
         </state>
       </provider>
     </entry>
@@ -448,22 +438,42 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/src/events/controller.ts">
+    <entry file="file://$PROJECT_DIR$/server/src/users/entity.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="24">
-          <caret line="1" column="68" lean-forward="true" selection-start-line="1" selection-end-line="1" selection-end-column="68" />
+        <state relative-caret-position="-130">
+          <caret line="21" column="33" selection-start-line="21" selection-start-column="33" selection-end-line="21" selection-end-column="33" />
           <folding>
-            <element signature="e#0#29#0" expanded="true" />
+            <element signature="e#0#74#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/src/comments/controller.ts">
+    <entry file="file://$PROJECT_DIR$/server/src/db.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="14" column="52" selection-start-line="14" selection-start-column="52" selection-end-line="14" selection-end-column="52" />
+        <state relative-caret-position="454">
+          <caret line="114" lean-forward="true" selection-start-line="114" selection-end-line="114" />
           <folding>
-            <element signature="e#0#31#0" expanded="true" />
+            <element signature="e#0#40#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/src/events/entity.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="329">
+          <caret line="27" column="11" selection-start-line="27" selection-start-column="4" selection-end-line="27" selection-end-column="11" />
+          <folding>
+            <element signature="e#0#85#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/src/events/controller.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="35" column="28" selection-start-line="35" selection-start-column="28" selection-end-line="35" selection-end-column="28" />
+          <folding>
+            <element signature="e#72#147#0" expanded="true" />
           </folding>
         </state>
       </provider>

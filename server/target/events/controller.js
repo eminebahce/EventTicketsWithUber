@@ -14,6 +14,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const entity_1 = require("./entity");
 const routing_controllers_1 = require("routing-controllers");
+const typeorm_1 = require("typeorm");
 let EventController = class EventController {
     async getEvents() {
         const events = await entity_1.default.find();
@@ -22,6 +23,16 @@ let EventController = class EventController {
     async createEvents(event) {
         const eventEntity = entity_1.default.create(event);
         await eventEntity.save();
+    }
+    async getEventsTickets(id) {
+        const eventsTickets = await typeorm_1.getConnection()
+            .getRepository(entity_1.default)
+            .createQueryBuilder("event")
+            .leftJoinAndSelect("event.tickets", "tickets")
+            .relation(entity_1.default, "tickets")
+            .of(id).loadMany();
+        console.log('XXXXXXX', eventsTickets);
+        return eventsTickets;
     }
 };
 __decorate([
@@ -37,6 +48,13 @@ __decorate([
     __metadata("design:paramtypes", [entity_1.default]),
     __metadata("design:returntype", Promise)
 ], EventController.prototype, "createEvents", null);
+__decorate([
+    routing_controllers_1.Get('/events/:id/tickets'),
+    __param(0, routing_controllers_1.Param('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], EventController.prototype, "getEventsTickets", null);
 EventController = __decorate([
     routing_controllers_1.JsonController()
 ], EventController);

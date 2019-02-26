@@ -43,7 +43,62 @@ export default () => createConnection({
 })
 .then(async connection => {
   console.log('Connected to Postgres with TypeORM')
-  const users = await connection
+
+    const comment1 = new Comment();
+    comment1.text = "Cool ticket";
+    comment1.createDate = new Date();
+    await connection.manager.save(comment1);
+
+    const comment2 = new Comment();
+    comment2.text = "Good ticket";
+    comment2.createDate = new Date();
+    await connection.manager.save(comment2);
+
+    const comment3 = new Comment();
+    comment3.text = "Bad ticket";
+    comment3.createDate = new Date();
+    await connection.manager.save(comment3);
+
+    const comment4 = new Comment();
+    comment4.text = "Worst ticket";
+    comment4.createDate = new Date();
+    await connection.manager.save(comment4);
+
+    const ticket1 = new Ticket();
+    ticket1.description = "Early Bird";
+    ticket1.picture = "picture";
+    ticket1.price = 4;
+    ticket1.endDate = new Date();
+    ticket1.comments = [comment1, comment3];
+    await connection.manager.save(ticket1);
+
+    const ticket2 = new Ticket();
+    ticket2.description = "Day Bird";
+    ticket2.picture = "picture";
+    ticket2.price = 10;
+    ticket2.endDate = new Date();
+    ticket2.comments = [comment2, comment4];
+    await connection.manager.save(ticket2);
+
+    const event = new Event();
+    event.name = "Go to";
+    event.description = "Development Conference";
+    event.picture = "picture";
+    event.startDate = new Date();
+    event.endDate = new Date();
+    event.tickets = [ticket1, ticket2];
+    await connection.manager.save(event);
+
+    const user = new User();
+    //user.name = "Can Cizer";
+    user.userType = "admin";
+    user.events = [event];
+    user.tickets = [ticket1, ticket2];
+    user.comments = [comment1, comment2, comment3, comment4];
+    await connection.manager.save(user);
+
+
+    const users = await connection
        .getRepository(User)
         .createQueryBuilder("user")
         .leftJoinAndSelect("user.events", "event")

@@ -37,6 +37,50 @@ exports.default = () => typeorm_1.createConnection({
 })
     .then(async (connection) => {
     console.log('Connected to Postgres with TypeORM');
+    const comment1 = new entity_3.default();
+    comment1.text = "Cool ticket";
+    comment1.createDate = new Date();
+    await connection.manager.save(comment1);
+    const comment2 = new entity_3.default();
+    comment2.text = "Good ticket";
+    comment2.createDate = new Date();
+    await connection.manager.save(comment2);
+    const comment3 = new entity_3.default();
+    comment3.text = "Bad ticket";
+    comment3.createDate = new Date();
+    await connection.manager.save(comment3);
+    const comment4 = new entity_3.default();
+    comment4.text = "Worst ticket";
+    comment4.createDate = new Date();
+    await connection.manager.save(comment4);
+    const ticket1 = new entity_2.default();
+    ticket1.description = "Early Bird";
+    ticket1.picture = "picture";
+    ticket1.price = 4;
+    ticket1.endDate = new Date();
+    ticket1.comments = [comment1, comment3];
+    await connection.manager.save(ticket1);
+    const ticket2 = new entity_2.default();
+    ticket2.description = "Day Bird";
+    ticket2.picture = "picture";
+    ticket2.price = 10;
+    ticket2.endDate = new Date();
+    ticket2.comments = [comment2, comment4];
+    await connection.manager.save(ticket2);
+    const event = new entity_4.default();
+    event.name = "Go to";
+    event.description = "Development Conference";
+    event.picture = "picture";
+    event.startDate = new Date();
+    event.endDate = new Date();
+    event.tickets = [ticket1, ticket2];
+    await connection.manager.save(event);
+    const user = new entity_1.default();
+    user.userType = "admin";
+    user.events = [event];
+    user.tickets = [ticket1, ticket2];
+    user.comments = [comment1, comment2, comment3, comment4];
+    await connection.manager.save(user);
     const users = await connection
         .getRepository(entity_1.default)
         .createQueryBuilder("user")

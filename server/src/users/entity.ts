@@ -14,7 +14,7 @@ export default class User extends BaseEntity {
     id?: number
 
     @IsEmail()
-    @Column('text', {nullable: false})
+    @Column('text', {nullable: true})
     email: string
 
     @IsString()
