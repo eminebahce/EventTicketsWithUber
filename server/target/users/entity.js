@@ -14,6 +14,9 @@ const BaseEntity_1 = require("typeorm/repository/BaseEntity");
 const class_validator_1 = require("class-validator");
 const class_transformer_1 = require("class-transformer");
 const bcrypt = require("bcrypt");
+const entity_1 = require("../comments/entity");
+const entity_2 = require("../events/entity");
+const entity_3 = require("../tickets/entity");
 let User = class User extends BaseEntity_1.BaseEntity {
     async setPassword(rawPassword) {
         const hash = await bcrypt.hash(rawPassword, 10);
@@ -39,6 +42,22 @@ __decorate([
     class_transformer_1.Exclude({ toPlainOnly: true }),
     __metadata("design:type", String)
 ], User.prototype, "password", void 0);
+__decorate([
+    typeorm_1.Column({ nullable: true }),
+    __metadata("design:type", String)
+], User.prototype, "userType", void 0);
+__decorate([
+    typeorm_1.OneToMany(() => entity_2.default, event => event.user),
+    __metadata("design:type", Array)
+], User.prototype, "events", void 0);
+__decorate([
+    typeorm_1.OneToMany(() => entity_3.default, ticket => ticket.user),
+    __metadata("design:type", Array)
+], User.prototype, "tickets", void 0);
+__decorate([
+    typeorm_1.OneToMany(() => entity_1.default, comment => comment.user),
+    __metadata("design:type", Array)
+], User.prototype, "comments", void 0);
 User = __decorate([
     typeorm_1.Entity()
 ], User);
