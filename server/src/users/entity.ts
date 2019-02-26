@@ -4,6 +4,7 @@ import {IsEmail, IsString, MinLength} from 'class-validator';
 import {Exclude} from 'class-transformer'
 import * as bcrypt from 'bcrypt'
 
+
 @Entity()
 export default class User extends BaseEntity {
 
@@ -11,17 +12,17 @@ export default class User extends BaseEntity {
     id?: number
 
     @IsEmail()
-    @Column('text')
+    @Column('text', {nullable: false})
     email: string
 
     @IsString()
     @MinLength(8)
-    @Column('text')
+    @Column('text', {nullable: true})
     @Exclude({toPlainOnly: true})
     password: string
 
     async setPassword(rawPassword: string){
-        const hash = await bcrypt.hash(rawPassword, 10)
+        const hash = await bcrypt.hash(rawPassword,10)
         this.password = hash
     }
 
