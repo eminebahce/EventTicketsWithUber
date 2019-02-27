@@ -90,7 +90,7 @@ export default () => createConnection({
     await connection.manager.save(event);
 
     const user = new User();
-    //user.name = "Can Cizer";
+    //user.name = "Emine Bahce Cizer Can Cizer";
     user.userType = "admin";
     user.events = [event];
     user.tickets = [ticket1, ticket2];
@@ -110,5 +110,3 @@ export default () => createConnection({
     users.map(user => user.events.forEach(event => event.tickets.forEach(ticket => console.log(ticket.comments))));
 }).catch(error => console.log("Error: ", error));
 
-
-//.then(() => console.log('Connected to Postgres with TypeORM'))
