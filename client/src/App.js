@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import './App.css';
-import {BrowserRouter as Router, Route, Redirect} from "react-router-dom";
+import {Provider} from 'react-redux';
+import store from './store';
+import Routes from './components/Routes'
+//import EventsListContainer from './components/EventsListContainer';
 
 class App extends Component {
   render() {
     return (
-      <Router>
-        <div className="App">
-        </div>
-      </Router>
+      <Provider store={store}>
+       <Routes/>
+      </Provider>
     );
   }
 }
