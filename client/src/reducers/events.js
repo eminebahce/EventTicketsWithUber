@@ -6,6 +6,8 @@ const reducer = (state = null, action = {}) => {
             return action.payload.events;
         case 'TICKETS_FETCHED':
             return action.payload.tickets;
+        case 'COMMENTS_FETCHED':
+            return action.payload.comments;
         default:
             return state;
     }

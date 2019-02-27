@@ -38,3 +38,20 @@ const loadTicketsByEventId = (tickets) => ({
        tickets:tickets
    }
 });
+
+export const loadComments = (id, ticketId) => {
+    return(dispatch) => {
+        request(`${baseUrl}/events/${id}/tickets/${ticketId}/comments`)
+            .then(response => {
+                dispatch(loadCommentsByTicketId(response.body[0]))
+            })
+            .catch(error => console.error)
+    }
+}
+
+const loadCommentsByTicketId = (comments) => ({
+    type:'COMMENTS_FETCHED',
+    payload: {
+        comments:comments
+    }
+})

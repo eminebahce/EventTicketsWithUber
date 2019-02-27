@@ -5,13 +5,13 @@ import {loadTickets} from '../actions/events';
 
 class EventTicketsListContainer extends React.Component{
 
-    componentDidMount(){
-        this.props.loadTickets(Number(this.props.match.params.id));
+    componentDidMount = () => {
+        this.props.loadTickets(this.props.match.params.id);
     }
 
     render(){
         return(
-            <EventTicketsList tickets={this.props.tickets}/>
+            <EventTicketsList tickets={this.props.tickets} eventId={this.props.match.params.id}/>
         )
     }
 
