@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b8787a73-ebea-4175-adda-d8ce8fdb45c6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/server/src/fraudCalculation.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/events/entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/events/entity.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/tickets/entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/tickets/entity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/fraudCalculation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/fraudCalculation.ts" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -45,8 +42,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/server/src/fraudCalculation.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="192">
-              <caret line="8" column="56" selection-start-line="8" selection-start-column="56" selection-end-line="8" selection-end-column="56" />
+            <state relative-caret-position="96">
+              <caret line="4" column="43" selection-start-line="4" selection-start-column="43" selection-end-line="4" selection-end-column="43" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
               </folding>
@@ -237,12 +234,12 @@
       <option name="presentableId" value="Default" />
       <updated>1551105683746</updated>
       <workItem from="1551105685282" duration="4376000" />
-      <workItem from="1551111270734" duration="84856000" />
+      <workItem from="1551111270734" duration="84998000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="89232000" />
+    <option name="totallyTimeSpent" value="89374000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="745" y="23" width="1175" height="1018" extended-state="0" />
@@ -264,7 +261,7 @@
       <window_info anchor="bottom" id="DB Execution Console" order="9" />
       <window_info anchor="bottom" id="Database Changes" order="10" />
       <window_info anchor="bottom" id="TypeScript" order="11" weight="0.32982087" />
-      <window_info anchor="bottom" id="Terminal" order="12" sideWeight="0.49916667" visible="true" weight="0.20879121" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="12" sideWeight="0.49916667" visible="true" weight="0.32307693" />
       <window_info anchor="bottom" id="Event Log" order="13" sideWeight="0.50083333" side_tool="true" weight="0.24669604" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -608,8 +605,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/server/src/fraudCalculation.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="8" column="56" selection-start-line="8" selection-start-column="56" selection-end-line="8" selection-end-column="56" />
+        <state relative-caret-position="96">
+          <caret line="4" column="43" selection-start-line="4" selection-start-column="43" selection-end-line="4" selection-end-column="43" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
           </folding>
