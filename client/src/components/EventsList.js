@@ -13,6 +13,8 @@ export default function EventsList(props) {
                             <p>{event.image}</p>
                             <p>{event.startDate}</p>
                             <p>{event.endDate}</p>
+                            <button onClick={() => props.onDelete(event.id)}>X</button>
+                            <button onClick={() => props.onEdit(event)}>Edit</button>
                         </div>
                     </li>)
                 )}
@@ -22,12 +24,3 @@ export default function EventsList(props) {
     )
 }
 
-/**
- * <div>
- {event.name}
- {event.description}
- {event.image}
- {event.startDate}
- {event.endDate}
- </div>
- */

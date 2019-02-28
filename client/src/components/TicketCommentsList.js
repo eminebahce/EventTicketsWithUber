@@ -8,13 +8,18 @@ export default function TicketCommentsList(props) {
             {(props.comments) &&
             <div>
                 <div>
-                    <p>{props.comments[0].description}</p>
-                    <p>{props.comments[0].endDate}</p>
-                    <p>{props.comments[0].price}</p>
-                    <p>{props.comments[0].picture}</p>
+                    <p>{props.comments.ticket[0].description}</p>
+                    <p>{props.comments.ticket[0].endDate}</p>
+                    <p>{props.comments.ticket[0].price}</p>
+                    <p>{props.comments.ticket[0].picture}</p>
                 </div>
                 <div>
-                    {(props.comments[0].comments) && props.comments[0].comments.map(comment =>
+                    <p>
+                        Risk: {props.comments.risk} %
+                    </p>
+                </div>
+                <div>
+                    {(props.comments.ticket[0].comments) && props.comments.ticket[0].comments.map(comment =>
                         <li key={comment.id}>
                         <p>{comment.text}</p>
                         <p>{comment.createDate}</p>

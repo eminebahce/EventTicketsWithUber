@@ -6,7 +6,8 @@ import {loadComments} from '../actions/events';
 class TicketCommentsListContainer extends React.Component{
 
     componentDidMount() {
-        this.props.loadComments(Number(this.props.match.params.id),Number(this.props.match.params.ticketId));
+        console.log("LOAD!");
+        this.props.loadComments(this.props.match.params.id,this.props.match.params.ticketId);
     }
 
     render(){

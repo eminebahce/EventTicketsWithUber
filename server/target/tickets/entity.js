@@ -33,9 +33,13 @@ __decorate([
     __metadata("design:type", Number)
 ], Ticket.prototype, "price", void 0);
 __decorate([
-    typeorm_1.Column({ nullable: true }),
+    typeorm_1.Column(),
     __metadata("design:type", Date)
 ], Ticket.prototype, "endDate", void 0);
+__decorate([
+    typeorm_1.Column(),
+    __metadata("design:type", Date)
+], Ticket.prototype, "createDate", void 0);
 __decorate([
     typeorm_1.OneToMany(() => entity_2.default, comment => comment.ticket),
     __metadata("design:type", Array)

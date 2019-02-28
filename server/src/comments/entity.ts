@@ -13,6 +13,9 @@ export default class Comment extends BaseEntity {
     text: string
 
     @Column({nullable: true})
+    author: string
+
+    @Column()
     createDate: Date
 
     @ManyToOne(() => Ticket, ticket => ticket.comments)

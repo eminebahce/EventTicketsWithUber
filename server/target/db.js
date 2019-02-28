@@ -58,6 +58,7 @@ exports.default = () => typeorm_1.createConnection({
     ticket1.picture = "picture";
     ticket1.price = 4;
     ticket1.endDate = new Date();
+    ticket1.createDate = new Date();
     ticket1.comments = [comment1, comment3];
     await connection.manager.save(ticket1);
     const ticket2 = new entity_2.default();
@@ -65,6 +66,7 @@ exports.default = () => typeorm_1.createConnection({
     ticket2.picture = "picture";
     ticket2.price = 10;
     ticket2.endDate = new Date();
+    ticket2.createDate = new Date();
     ticket2.comments = [comment2, comment4];
     await connection.manager.save(ticket2);
     const event = new entity_4.default();
@@ -73,6 +75,7 @@ exports.default = () => typeorm_1.createConnection({
     event.picture = "picture";
     event.startDate = new Date();
     event.endDate = new Date();
+    event.createDate = new Date();
     event.tickets = [ticket1, ticket2];
     await connection.manager.save(event);
     const user = new entity_1.default();

@@ -25,6 +25,10 @@ __decorate([
 ], Comment.prototype, "text", void 0);
 __decorate([
     typeorm_1.Column({ nullable: true }),
+    __metadata("design:type", String)
+], Comment.prototype, "author", void 0);
+__decorate([
+    typeorm_1.Column(),
     __metadata("design:type", Date)
 ], Comment.prototype, "createDate", void 0);
 __decorate([

@@ -43,6 +43,7 @@ export const loadComments = (id, ticketId) => {
     return(dispatch) => {
         request(`${baseUrl}/events/${id}/tickets/${ticketId}/comments`)
             .then(response => {
+                console.log(response.body);
                 dispatch(loadCommentsByTicketId(response.body[0]))
             })
             .catch(error => console.error)

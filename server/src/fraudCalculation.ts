@@ -2,7 +2,7 @@ import Ticket from './tickets/entity';
 import Comment from './comments/entity';
 import {getConnection} from "typeorm";
 
-async function FraudCalculation() {
+async function FraudCalculation(ticketId:number, eventId:number) {
 
     let risk:number = 0;
 
@@ -12,12 +12,12 @@ async function FraudCalculation() {
         .createQueryBuilder("ticket")
         .where(qb => {
             const subquery = qb.subQuery()
-                .select("ticket.userId")
+                .select("ticket.user_id")
                 .from(Ticket, "ticket")
-                .where("ticket.id = :id", {id:id})
+                .where("ticket.id = :id", {id:ticketId})
                 .getQuery();
 
-            return `ticket.userId = ${subquery}`;
+            return `ticket.user_Id = ${subquery}`;
         })
         .getMany();
 
@@ -30,13 +30,13 @@ async function FraudCalculation() {
         .getRepository(Ticket)
         .createQueryBuilder("ticket")
         .select("AVG(ticket.price)", "avgPrice")
-        .where("ticket.eventId = :id", {id:id})
+        .where("ticket.event_id = :id", {id:eventId})
         .getRawOne();
 
     const ticket = await getConnection()
         .getRepository(Ticket)
         .createQueryBuilder("ticket")
-        .where("ticket.id = :id", {id:id})
+        .where("ticket.id = :id", {id:ticketId})
         .getOne();
 
     if(ticket!.price < eventTickets.avgPrice){
@@ -55,11 +55,11 @@ async function FraudCalculation() {
     const ticketBHour = await getConnection()
         .getRepository(Ticket)
         .createQueryBuilder("ticket")
-        .where("ticket.id = :id", {id:id})
+        .where("ticket.id = :id", {id:ticketId})
         .getOne();
 
     const hour = new Date();
-    hour.setUTCHours(parseInt(ticketBHour!.endDate.substr(11,2)), parseInt(ticketBHour!.endDate.substr(14,2)), parseInt(ticketBHour!.endDate.substr(17,2)));
+    hour.setUTCHours(ticketBHour!.createDate.getHours(), ticketBHour!.createDate.getMinutes(), ticketBHour!.createDate.getSeconds());
     const start = new Date();
     start.setUTCHours(9,0,0);
     const end = new Date();
@@ -75,7 +75,7 @@ async function FraudCalculation() {
     const comments = await getConnection()
         .getRepository(Comment)
         .createQueryBuilder("comment")
-        .andWhere("comment.ticketId = :id", {id:id})
+        .andWhere("comment.ticket_id = :id", {id:ticketId})
         .getMany();
 
     if (comments.length > 3) {

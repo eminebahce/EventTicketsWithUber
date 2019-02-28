@@ -40,6 +40,10 @@ __decorate([
     __metadata("design:type", Date)
 ], Event.prototype, "endDate", void 0);
 __decorate([
+    typeorm_1.Column(),
+    __metadata("design:type", Date)
+], Event.prototype, "createDate", void 0);
+__decorate([
     typeorm_1.OneToMany(() => entity_2.default, ticket => ticket.event),
     __metadata("design:type", Array)
 ], Event.prototype, "tickets", void 0);

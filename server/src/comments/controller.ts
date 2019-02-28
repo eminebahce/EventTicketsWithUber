@@ -2,6 +2,7 @@ import Comment from './entity';
 import {Get, Post, JsonController, Body, Param} from "routing-controllers";
 import {getConnection} from "typeorm";
 import Event from "../events/entity";
+import fraudCalculation from '../fraudCalculation';
 
 @JsonController()
 export default class CommentController {
@@ -17,7 +18,17 @@ export default class CommentController {
             .andWhere("ticket.id = :ticketId", {ticketId})
             .getMany();
 
-        return events.map(event => event.tickets);
+        let risk = 0;
+        console.log(risk);
+
+        if(events.length == 1){
+            risk = await fraudCalculation(ticketId, eventId);
+            console.log(risk);
+        }
+
+        return events.map(event => {
+            return {'ticket':event.tickets, 'risk':risk};
+        });
     }
 
     @Post('/events/:eventId/tickets/:ticketId/comments')

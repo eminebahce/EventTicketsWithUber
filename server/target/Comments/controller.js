@@ -16,6 +16,7 @@ const entity_1 = require("./entity");
 const routing_controllers_1 = require("routing-controllers");
 const typeorm_1 = require("typeorm");
 const entity_2 = require("../events/entity");
+const fraudCalculation_1 = require("../fraudCalculation");
 let CommentController = class CommentController {
     async getEventsTicketsComments(eventId, ticketId) {
         const events = await typeorm_1.getConnection()
@@ -26,7 +27,15 @@ let CommentController = class CommentController {
             .where("event.id = :eventId", { eventId })
             .andWhere("ticket.id = :ticketId", { ticketId })
             .getMany();
-        return events.map(event => event.tickets);
+        let risk = 0;
+        console.log(risk);
+        if (events.length == 1) {
+            risk = await fraudCalculation_1.default(ticketId, eventId);
+            console.log(risk);
+        }
+        return events.map(event => {
+            return { 'ticket': event.tickets, 'risk': risk };
+        });
     }
     async createEventsTicketsComments(comment, eventId, ticketId) {
         const commentEntity = entity_1.default.create(comment);
