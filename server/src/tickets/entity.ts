@@ -22,6 +22,9 @@ export default class Ticket extends BaseEntity{
     @Column({nullable: true})
     endDate: Date
 
+    @Column({nullable: true})
+    createDate: Date
+
     @OneToMany(() => Comment, comment => comment.ticket)
     comments: Comment[]
 
