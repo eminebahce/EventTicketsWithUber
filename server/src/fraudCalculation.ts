@@ -2,7 +2,7 @@ import Ticket from './tickets/entity';
 import Comment from './comments/entity';
 import {getConnection} from "typeorm";
 
-export default function FraudCalculation() {
+async function FraudCalculation() {
 
     let risk:number = 0;
 
@@ -91,3 +91,5 @@ export default function FraudCalculation() {
 
     return risk;
 }
+
+export default FraudCalculation;
