@@ -8,6 +8,7 @@ export const login = (email, password) => {
             .post(`${baseUrl}/logins`)
             .send({email, password})
             .then(response => {
+                localStorage.setItem('user', response.body.jwt)
                 dispatch(loginsuccess(response.body.jwt))
             })
             .catch(error => console.error);
@@ -27,7 +28,7 @@ export const signup = (email, password) => {
             .post(`${baseUrl}/users`)
             .send({email, password})
             .then(response => {
-                dispatch(signupsuccess(response.body.user))
+                dispatch(signupsuccess(response.body))
             })
             .catch(error => console.error);
     }
@@ -40,9 +41,9 @@ const signupsuccess = (user) => ({
     }
 });
 
-/*
+
 export const logout = () => {
-    localStorage.removeItem('currentUser');
+    localStorage.removeItem('user');
     localStorage.clear();
     this.props.history.push("/");
-}*/
+}
