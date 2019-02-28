@@ -13,6 +13,7 @@ class SignUpFormContainer extends React.Component{
     onSubmit = (event) => {
         event.preventDefault();
         this.props.signup(this.state.email, this.state.password)
+        this.props.history.push("/login");
     }
 
     onChange = (event) => {
@@ -23,7 +24,7 @@ class SignUpFormContainer extends React.Component{
 
     render(){
         return(
-            <SignUpForm onsubmit={this.onSubmit} onchange={this.onChange} values={this.state}/>
+            <SignUpForm onSubmit={this.onSubmit} onChange={this.onChange} values={this.state}/>
         )
     }
 }

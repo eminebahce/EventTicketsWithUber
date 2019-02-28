@@ -1,23 +1,34 @@
 import React from 'react';
 import {Link} from "react-router-dom";
+import LoginandSignup from '../LoginandSignup.css';
 
 export default function LoginForm(props) {
 
     return(
-        <div>
-            <h2>LOGIN</h2>
-            <form onSubmit={props.onSubmit}>
-                <label>
-                    email:
-                    <input type="email" name="email" onChange={props.onChange} value={props.values.email}/>
-                </label>
-                <label>
-                    password:
-                    <input type="password" name="password" onChange={props.onChange} value={props.values.password} />
-                </label>
-                <button type="submit">Login</button>
-                <Link to="/register">Register</Link>
+        <div className="wrapper">
+            <form className="form-signin" onSubmit={props.onSubmit}>
+                <h2 className="form-signin-heading">LOGIN</h2>
+                    <input
+                        type="email"
+                        name="email"
+                        onChange={props.onChange}
+                        value={props.values.email}
+                        className="form-control"
+                        placeholder="Email Address"
+                        autoFocus=""
+                    />
+                    <input
+                        type="password"
+                        name="password"
+                        onChange={props.onChange}
+                        value={props.values.password}
+                        className="form-control"
+                        placeholder="Password"
+                    />
+                <button className="btn btn-info btn-block" type="submit">Login</button>
+                <Link to="/register"><button className="btn btn-info btn-block mt-1">Register</button></Link>
+
             </form>
         </div>
-    )
+    );
 }

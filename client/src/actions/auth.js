@@ -38,4 +38,11 @@ const signupsuccess = (user) => ({
     payload: {
         user:user
     }
-})
+});
+
+/*
+export const logout = () => {
+    localStorage.removeItem('currentUser');
+    localStorage.clear();
+    this.props.history.push("/");
+}*/
