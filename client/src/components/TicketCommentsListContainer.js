@@ -11,7 +11,11 @@ class TicketCommentsListContainer extends React.Component{
 
     render(){
         return(
-            <TicketCommentsList comments={this.props.comments} />
+            <TicketCommentsList
+                comments={this.props.comments}
+                eventId={this.props.match.params.id}
+                ticketId={this.props.match.params.ticketId}
+            />
         );
     }
 }

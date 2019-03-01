@@ -31,7 +31,10 @@ export default function TicketCommentsList(props) {
                 {!props.comments && <div><p>Loading...</p></div>}
             </div>}
             <div>
-                <CreateCommentFormContainer />
+                <CreateCommentFormContainer
+                    eventId={props.eventId}
+                    ticketId={props.ticketId}
+                />
             </div>
         </div>
     );

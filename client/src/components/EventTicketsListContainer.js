@@ -3,6 +3,7 @@ import EventTicketsList from './EventTicketsList';
 import {connect} from "react-redux";
 import {loadTickets} from '../actions/events';
 import {deleteTicket, updateTicket} from '../actions/postoperations';
+import CreateTicketFormContainer from './CreateTicketFormContainer';
 
 class EventTicketsListContainer extends React.Component{
 
@@ -17,7 +18,7 @@ class EventTicketsListContainer extends React.Component{
 
     onDelete = (id) => {
         this.props.deleteTicket(id);
-        this.props.history.push(`/events/${id}/tickets`);
+        this.props.history.push(`/events/${this.props.match.params.id}/tickets`);
     };
 
     onEdit = (ticket) => {
@@ -63,6 +64,7 @@ class EventTicketsListContainer extends React.Component{
                     values={this.state.formValues}
                     ticketeditMode={this.state.ticketeditMode}
                 />
+                <CreateTicketFormContainer eventId={this.props.match.params.id} />
             </div>
         )
     };

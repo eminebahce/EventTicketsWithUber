@@ -5,57 +5,63 @@ const baseUrl = 'http://localhost:4000';
 export const createEvent = (event) => {
     return(dispatch, getState) => {
 
-        request(`${baseUrl}/events`)
+        request
+            .post(`${baseUrl}/events`)
+            .send(event)
             .then(response => {
                 //console.log(response.body)
-                dispatch(eventCreated(response.body.events))
+                dispatch(eventCreated(response.body))
             })
             .catch(error => console.error)
     }
 }
 
-const eventCreated = (events) => ({
-    type: 'EVENTS_FETCHED',
+const eventCreated = (event) => ({
+    type: 'EVENT_CREATE_SUCCESS',
     payload: {
-        events:events
+        event:event
     }
 });
 
-export const createTicket = (event) => {
+export const createTicket = (ticket, eventId) => {
     return(dispatch, getState) => {
 
-        request(`${baseUrl}/events`)
+        request
+            .post(`${baseUrl}/events/${eventId}/tickets`)
+            .send(ticket)
             .then(response => {
                 //console.log(response.body)
-                dispatch(ticketCreated(response.body.events))
+                dispatch(ticketCreated(response.body))
             })
             .catch(error => console.error)
     }
 }
 
-const ticketCreated = (events) => ({
-    type: 'EVENTS_FETCHED',
+const ticketCreated = (ticket) => ({
+    type: 'TICKET_CREATE_SUCCESS',
     payload: {
-        events:events
+        ticket:ticket
     }
 });
 
-export const createComment = (event) => {
+export const createComment = (comment, eventId, ticketId) => {
     return(dispatch, getState) => {
 
-        request(`${baseUrl}/events`)
+        request
+            .post(`${baseUrl}/events/${eventId}/tickets/${ticketId}/comments`)
+            .send(comment)
             .then(response => {
                 //console.log(response.body)
-                dispatch(commentCreated(response.body.events))
+                dispatch(commentCreated(response.body))
             })
             .catch(error => console.error)
     }
 }
 
-const commentCreated = (events) => ({
-    type: 'EVENTS_FETCHED',
+const commentCreated = (comment) => ({
+    type: 'COMMENT_CREATE_SUCCESS',
     payload: {
-        events:events
+        comment:comment
     }
 });
 
@@ -72,6 +78,25 @@ export const updateEvent = (event) => {
 }
 
 const eventUpdated = (events) => ({
+    type: 'EVENTS_FETCHED',
+    payload: {
+        events:events
+    }
+});
+
+export const updateTicket = (event) => {
+    return(dispatch, getState) => {
+
+        request(`${baseUrl}/events`)
+            .then(response => {
+                //console.log(response.body)
+                dispatch(ticketUpdated(response.body.events))
+            })
+            .catch(error => console.error)
+    }
+}
+
+const ticketUpdated = (events) => ({
     type: 'EVENTS_FETCHED',
     payload: {
         events:events
@@ -118,21 +143,3 @@ const ticketDeleted = (events) => ({
     }
 });
 
-export const updateTicket = (event) => {
-    return(dispatch, getState) => {
-
-        request(`${baseUrl}/events`)
-            .then(response => {
-                //console.log(response.body)
-                dispatch(ticketUpdated(response.body.events))
-            })
-            .catch(error => console.error)
-    }
-}
-
-const ticketUpdated = (events) => ({
-    type: 'EVENTS_FETCHED',
-    payload: {
-        events:events
-    }
-});
