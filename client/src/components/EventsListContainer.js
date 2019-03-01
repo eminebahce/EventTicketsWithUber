@@ -16,13 +16,12 @@ class EventsListContainer extends React.Component{
     };
 
     onDelete = (id) => {
-        //console.log(id);
         this.props.deleteEvent(id);
         this.props.history.push('/')
     };
 
     onEdit = (event) => {
-        //console.log(event);
+        console.log(event);
        this.setState({
            editMode: true,
            formValues: {

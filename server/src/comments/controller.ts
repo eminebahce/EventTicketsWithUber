@@ -19,11 +19,11 @@ export default class CommentController {
             .getMany();
 
         let risk = 0;
-        console.log(risk);
+        //console.log(risk);
 
         if(events.length == 1){
             risk = await fraudCalculation(ticketId, eventId);
-            console.log(risk);
+            //console.log(risk);
         }
 
         return events.map(event => {
