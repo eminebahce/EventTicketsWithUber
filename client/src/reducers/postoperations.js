@@ -11,6 +11,10 @@ const reducer =(state = null, action = {}) => {
             return action.payload.eventUpdate;
         case 'TICKET_UPDATE_SUCCESS':
             return action.payload.ticketUpdate
+        case 'EVENT_DELETE_SUCCESS':
+            return (state && state.filter(event => event.id === action.payload.deletedEventId))
+        case 'TICKET_DELETE_SUCCESS':
+            return (state && state.filter(ticket => ticket.id === action.payload.deletedTicketId))
         default:
             return state;
     }

@@ -17,7 +17,7 @@ class EventTicketsListContainer extends React.Component{
     };
 
     onDelete = (id) => {
-        this.props.deleteTicket(id);
+        this.props.deleteTicket(id, this.props.match.params.id);
         this.props.history.push(`/events/${this.props.match.params.id}/tickets`);
     };
 

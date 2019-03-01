@@ -111,39 +111,39 @@ export const deleteEvent = (id) => {
     return(dispatch, getState) => {
 
         request
-            .delete(`${baseUrl}/events`)
+            .delete(`${baseUrl}/events/${id}`)
             .then(response => {
                 //console.log(response.body)
-                dispatch(eventDeleted(response.body.events))
+                dispatch(eventDeleted(id))
             })
             .catch(error => console.error)
     }
 }
 
-const eventDeleted = (events) => ({
-    type: 'EVENTS_FETCHED',
+const eventDeleted = (deletedEventId) => ({
+    type: 'EVENT_DELETE_SUCCESS',
     payload: {
-        events:events
+        deletedEventId:deletedEventId
     }
 });
 
-export const deleteTicket = (id) => {
+export const deleteTicket = (id, eventId) => {
     return(dispatch, getState) => {
 
         request
-            .delete(`${baseUrl}/events`)
+            .delete(`${baseUrl}/events/${eventId}/tickets/${id}`)
             .then(response => {
                 //console.log(response.body)
-                dispatch(ticketDeleted(response.body.events))
+                dispatch(ticketDeleted(id))
             })
             .catch(error => console.error)
     }
 }
 
-const ticketDeleted = (events) => ({
-    type: 'EVENTS_FETCHED',
+const ticketDeleted = (deletedTicketId) => ({
+    type: 'TICKET_DELETE_SUCCESS',
     payload: {
-        events:events
+        deletedTicketId:deletedTicketId
     }
 });
 
