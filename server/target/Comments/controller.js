@@ -28,10 +28,8 @@ let CommentController = class CommentController {
             .andWhere("ticket.id = :ticketId", { ticketId })
             .getMany();
         let risk = 0;
-        console.log(risk);
         if (events.length == 1) {
             risk = await fraudCalculation_1.default(ticketId, eventId);
-            console.log(risk);
         }
         return events.map(event => {
             return { 'ticket': event.tickets, 'risk': risk };

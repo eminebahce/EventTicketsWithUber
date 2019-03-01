@@ -1,5 +1,5 @@
 import React from 'react';
-import CreateEventForm from './CreateEventForm';
+import CreateCommentForm from './CreateCommentForm';
 import {connect} from "react-redux";
 import {createComment} from '../actions/postoperations'
 
@@ -26,7 +26,7 @@ class CreateCommentFormContainer extends React.Component{
 
     render(){
         return(
-            <CreateTicketForm
+            <CreateCommentForm
                 onSubmit={this.OnSubmit}
                 onChange={this.onChange}
                 values={this.state}

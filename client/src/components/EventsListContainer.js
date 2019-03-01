@@ -21,7 +21,6 @@ class EventsListContainer extends React.Component{
     };
 
     onEdit = (event) => {
-        console.log(event);
        this.setState({
            editMode: true,
            formValues: {

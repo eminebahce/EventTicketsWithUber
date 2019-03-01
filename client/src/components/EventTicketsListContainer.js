@@ -7,7 +7,7 @@ import {deleteTicket, updateTicket} from '../actions/postoperations';
 class EventTicketsListContainer extends React.Component{
 
     state = {
-        editMode: false,
+        ticketeditMode: false,
         formValues: {}
     };
 
@@ -22,7 +22,7 @@ class EventTicketsListContainer extends React.Component{
 
     onEdit = (ticket) => {
         this.setState({
-            editMode: true,
+            ticketeditMode: true,
             formValues: {
                 id:ticket.id,
                 description: ticket.description,
@@ -45,7 +45,7 @@ class EventTicketsListContainer extends React.Component{
     onSubmit = (event) => {
         event.preventDefault();
         this.setState({
-            editMode: false
+            ticketeditMode: false
         });
         this.props.updateTicket(this.state.formValues);
     };
@@ -60,6 +60,8 @@ class EventTicketsListContainer extends React.Component{
                     onEdit={this.onEdit}
                     onChange={this.onChange}
                     onSubmit={this.onSubmit}
+                    values={this.state.formValues}
+                    ticketeditMode={this.state.ticketeditMode}
                 />
             </div>
         )

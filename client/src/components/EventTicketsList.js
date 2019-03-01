@@ -1,16 +1,16 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 import TicketEditForm from './TicketEditForm';
-import EventEditForm from "./EventsList";
 
 export default function EventTicketsList(props) {
+
     return(
         <div>
-            {props.editMode && <TicketEditForm  onSubmit={props.onSubmit}
-                                                onChange={props.onChange}
-                                                value={props.values.name}
+            {props.ticketeditMode && <TicketEditForm onSubmit={props.onSubmit}
+                                                     onChange={props.onChange}
+                                                     value={props.values.name}
             />}
-            {!props.editMode && <div>
+            {!props.ticketeditMode && <div>
                 <ul>
                     {props.tickets && props.tickets.map((ticket)=>
                         (<li key={ticket.id}><Link to={`/events/${props.eventId}/tickets/${ticket.id}`}><p>{ticket.description}</p></Link>
