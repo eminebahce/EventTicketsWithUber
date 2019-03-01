@@ -68,38 +68,42 @@ const commentCreated = (comment) => ({
 export const updateEvent = (event) => {
     return(dispatch, getState) => {
 
-        request(`${baseUrl}/events`)
+        request
+            .post(`${baseUrl}/events/${event.id}`)
+            .send(event)
             .then(response => {
                 //console.log(response.body)
-                dispatch(eventUpdated(response.body.events))
+                dispatch(eventUpdated(response.body))
             })
             .catch(error => console.error)
     }
 }
 
-const eventUpdated = (events) => ({
-    type: 'EVENTS_FETCHED',
+const eventUpdated = (eventUpdate) => ({
+    type: 'EVENT_UPDATE_SUCCESS',
     payload: {
-        events:events
+        eventUpdate:eventUpdate
     }
 });
 
-export const updateTicket = (event) => {
+export const updateTicket = (ticket) => {
     return(dispatch, getState) => {
 
-        request(`${baseUrl}/events`)
+        request
+            .post(`${baseUrl}/ticket/${ticket.id}`)
+            .send(ticket)
             .then(response => {
                 //console.log(response.body)
-                dispatch(ticketUpdated(response.body.events))
+                dispatch(ticketUpdated(response.body))
             })
             .catch(error => console.error)
     }
 }
 
-const ticketUpdated = (events) => ({
-    type: 'EVENTS_FETCHED',
+const ticketUpdated = (ticketUpdate) => ({
+    type: 'TICKET_UPDATE_SUCCESS',
     payload: {
-        events:events
+        ticketUpdate:ticketUpdate
     }
 });
 
