@@ -6,6 +6,8 @@ export default function EventsList(props) {
 
     return(
         <div>
+            <Link to="/createEvent"><button className="btn btn-info mt-1 mb-4">Create Event</button></Link>
+
             {props.editMode && <EventEditForm onSubmit={props.onSubmit}
                                               onChange={props.onChange}
                                               value={props.values.name}

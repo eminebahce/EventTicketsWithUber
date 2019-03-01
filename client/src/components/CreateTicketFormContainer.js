@@ -1,5 +1,5 @@
 import React from 'react';
-import CreateEventForm from './CreateEventForm';
+import CreateTicketForm from './CreateTicketForm';
 import {connect} from "react-redux";
 import {createTicket} from '../actions/postoperations'
 

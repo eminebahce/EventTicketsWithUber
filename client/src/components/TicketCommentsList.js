@@ -1,7 +1,9 @@
 import React from 'react';
+import {Link} from "react-router-dom";
+import CreateCommentFormContainer from './CreateCommentFormContainer'
 
 export default function TicketCommentsList(props) {
-    console.log(props);
+    //console.log(props);
 
     return (
         <div>
@@ -28,6 +30,9 @@ export default function TicketCommentsList(props) {
                 </div>
                 {!props.comments && <div><p>Loading...</p></div>}
             </div>}
+            <div>
+                <CreateCommentFormContainer />
+            </div>
         </div>
     );
 }

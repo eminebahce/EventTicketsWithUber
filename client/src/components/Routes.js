@@ -2,6 +2,8 @@ import React from 'react';
 import EventsListContainer from './EventsListContainer';
 import EventTicketsListContainer from './EventTicketsListContainer';
 import TicketCommentsListContainer from './TicketCommentsListContainer';
+import CreateEventFormContainer from './CreateEventFormContainer';
+import CreateTicketFormContainer from './CreateTicketFormContainer';
 import LoginFormContainer from './LoginFormContainer';
 import SignUpFormContainer from './SignUpFormContainer';
 import {Switch, Route, Redirect} from 'react-router-dom'
@@ -16,6 +18,8 @@ function Routes (props) {
             <Route path="/events/:id/tickets/:ticketId" exact component={TicketCommentsListContainer}/>
             <Route path="/login" exact component={LoginFormContainer}/>
             <Route path="/register" exact component={SignUpFormContainer}/>
+            <Route path="/createEvent" exact component={CreateEventFormContainer}/>
+            <Route path="/createTicket" exact component={CreateTicketFormContainer}/>
         </div>
     );
 }

@@ -6,6 +6,8 @@ export default function EventTicketsList(props) {
 
     return(
         <div>
+            <Link to="/createTicket"><button className="btn btn-info mt-1 mb-4">Create Ticket</button></Link>
+
             {props.ticketeditMode && <TicketEditForm onSubmit={props.onSubmit}
                                                      onChange={props.onChange}
                                                      value={props.values.name}
