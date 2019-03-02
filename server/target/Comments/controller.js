@@ -16,6 +16,7 @@ const entity_1 = require("./entity");
 const routing_controllers_1 = require("routing-controllers");
 const typeorm_1 = require("typeorm");
 const entity_2 = require("../events/entity");
+const entity_3 = require("../tickets/entity");
 const fraudCalculation_1 = require("../fraudCalculation");
 let CommentController = class CommentController {
     async getEventsTicketsComments(eventId, ticketId) {
@@ -36,6 +37,7 @@ let CommentController = class CommentController {
         });
     }
     async createEventsTicketsComments(comment, eventId, ticketId) {
+        comment.createDate = new Date();
         const commentEntity = entity_1.default.create(comment);
         await commentEntity.save();
         const events = await typeorm_1.getConnection()
@@ -46,14 +48,42 @@ let CommentController = class CommentController {
             .where("event.id = :eventId", { eventId })
             .andWhere("ticket.id = :ticketId", { ticketId })
             .getMany();
-        events.map(event => {
-            event.tickets.map(ticket => {
+        await Promise.all(events.map(async (event) => {
+            await Promise.all(event.tickets.map(async (ticket) => {
                 ticket.comments = [...ticket.comments, commentEntity];
-                const ticketEntity = entity_2.default.create(ticket);
-                ticketEntity.save();
-            });
+                const ticketEntity = entity_3.default.create(ticket);
+                await ticketEntity.save();
+            }));
+        }));
+        let risk = 0;
+        if (events.length == 1) {
+            risk = await fraudCalculation_1.default(ticketId, eventId);
+        }
+        return events.map(event => { return { 'ticket': event.tickets, 'risk': risk }; });
+    }
+    async deleteComment(commentId, eventId, ticketId) {
+        const deleteComment = await entity_1.default.findOne(commentId);
+        if (!deleteComment) {
+            throw new routing_controllers_1.NotFoundError('Can not find comment');
+        }
+        else {
+            await entity_1.default.delete(deleteComment);
+        }
+        const events = await typeorm_1.getConnection()
+            .getRepository(entity_2.default)
+            .createQueryBuilder("event")
+            .leftJoinAndSelect("event.tickets", "ticket")
+            .leftJoinAndSelect("ticket.comments", "comment")
+            .where("event.id = :eventId", { eventId })
+            .andWhere("ticket.id = :ticketId", { ticketId })
+            .getMany();
+        let risk = 0;
+        if (events.length == 1) {
+            risk = await fraudCalculation_1.default(ticketId, eventId);
+        }
+        return events.map(event => {
+            return { 'ticket': event.tickets, 'risk': risk };
         });
-        return events.map(event => event.tickets);
     }
 };
 __decorate([
@@ -70,6 +100,13 @@ __decorate([
     __metadata("design:paramtypes", [entity_1.default, Number, Number]),
     __metadata("design:returntype", Promise)
 ], CommentController.prototype, "createEventsTicketsComments", null);
+__decorate([
+    routing_controllers_1.Delete('/events/:eventId/tickets/:ticketId/comments/:commentId'),
+    __param(0, routing_controllers_1.Param('commentId')), __param(1, routing_controllers_1.Param('eventId')), __param(2, routing_controllers_1.Param('ticketId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, Number, Number]),
+    __metadata("design:returntype", Promise)
+], CommentController.prototype, "deleteComment", null);
 CommentController = __decorate([
     routing_controllers_1.JsonController()
 ], CommentController);

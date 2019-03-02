@@ -17,20 +17,21 @@ class EventsListContainer extends React.Component{
 
     onDelete = (id) => {
         this.props.deleteEvent(id);
-        this.props.history.push('/')
+        this.props.history.push('/');
     };
 
     onEdit = (event) => {
+        //console.log(event);
        this.setState({
-           editMode: true,
            formValues: {
                id: event.id,
                name: event.name,
                description: event.description,
-               image: event.image,
+               picture: event.picture,
                startDate: event.startDate,
                endDate: event.endDate
-           }
+           },
+           editMode: true
        })
     };
 
@@ -45,10 +46,10 @@ class EventsListContainer extends React.Component{
 
     onSubmit = (event) => {
        event.preventDefault();
-      this.setState({
-          editMode: false
-      })
         this.props.updateEvent(this.state.formValues);
+        this.setState({
+            editMode: false
+        })
     };
 
     render() {
@@ -68,8 +69,10 @@ class EventsListContainer extends React.Component{
     }
 }
 
-const mapStateToProps = (state) =>({
-    events: state.events
-});
+const mapStateToProps = (state) => {
+    return {
+        events: state.postoperations.events
+    }
+};
 
 export default connect(mapStateToProps, {loadEvents, deleteEvent, updateEvent})(EventsListContainer);

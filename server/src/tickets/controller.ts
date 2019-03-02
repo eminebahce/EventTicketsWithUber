@@ -1,5 +1,5 @@
 import Ticket from './entity';
-import {Get, Post, JsonController, Body, Param} from "routing-controllers";
+import {Get, Post, JsonController, Body, Param, Put, NotFoundError, Delete} from "routing-controllers";
 import {getConnection} from "typeorm";
 import Event from "../events/entity";
 
@@ -8,8 +8,9 @@ export default class TicketController {
 
     @Post('/events/:id/tickets')
     async createEventsTicket(@Body() ticket:Ticket, @Param('id') id:number){
+        ticket.createDate = new Date();
         const ticketEntity = Ticket.create(ticket);
-        await ticketEntity.save();
+        const savedTicket = await ticketEntity.save();
 
         const events = await getConnection()
             .getRepository(Event)
@@ -24,7 +25,7 @@ export default class TicketController {
             eventEntity.save();
         });
 
-        return events;
+        return savedTicket;
     }
 
     @Get('/events/:id/tickets')
@@ -37,5 +38,26 @@ export default class TicketController {
             .getMany();
 
         return events;
+    }
+
+    @Put('/events/:eventId/tickets/:id')
+    async updateTicket(@Param('id') id:number, @Body() update:Partial<Ticket>){
+        //console.log(update);
+        const ticket = await Ticket.findOne(id)
+        if(!ticket){
+            throw new NotFoundError('Can not find ticket');
+        } else {
+            return Ticket.merge(ticket, update).save();
+        }
+    }
+
+    @Delete('/events/:eventId/tickets/:id')
+    async deleteTicket(@Param('id') id:number){
+        const deleteTicket = await Ticket.findOne(id)
+        if(!deleteTicket){
+            throw new NotFoundError('Can not find ticket');
+        } else {
+            return Ticket.delete(deleteTicket)
+        }
     }
 }

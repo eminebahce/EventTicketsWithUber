@@ -38,12 +38,12 @@ export default () => createConnection({
         Event
     ],
     synchronize: true,
-    logging: true,
+    logging: false,
     namingStrategy: new CustomNamingStrategy()
 })
-.then(async connection => {
-  console.log('Connected to Postgres with TypeORM')
-
+//.then(async connection => {
+//  console.log('Connected to Postgres with TypeORM')
+/*
     const comment1 = new Comment();
     comment1.text = "Cool ticket";
     comment1.createDate = new Date();
@@ -99,17 +99,18 @@ export default () => createConnection({
     user.tickets = [ticket1, ticket2];
     user.comments = [comment1, comment2, comment3, comment4];
     await connection.manager.save(user);
+*/
 
+    // const users = await connection
+    //    .getRepository(User)
+    //     .createQueryBuilder("user")
+    //     .leftJoinAndSelect("user.events", "event")
+    //     .leftJoinAndSelect("event.tickets", "ticket")
+    //     .leftJoinAndSelect("ticket.comments", "comment")
+    //     .where("comment.id = :id", {id : 1})
+    //     .getMany();
 
-    const users = await connection
-       .getRepository(User)
-        .createQueryBuilder("user")
-        .leftJoinAndSelect("user.events", "event")
-        .leftJoinAndSelect("event.tickets", "ticket")
-        .leftJoinAndSelect("ticket.comments", "comment")
-        .where("comment.id = :id", {id : 1})
-        .getMany();
-
-    users.map(user => user.events.forEach(event => event.tickets.forEach(ticket => console.log(ticket.comments))));
-}).catch(error => console.log("Error: ", error));
+    // users.map(user => user.events.forEach(event => event.tickets.forEach(ticket => console.log(ticket.comments))));
+//})
+.catch(error => console.log("Error: ", error));
 

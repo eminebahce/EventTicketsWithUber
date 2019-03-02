@@ -4,13 +4,18 @@ import TicketEditForm from './TicketEditForm';
 
 export default function EventTicketsList(props) {
 
+    const formatDate = (date) => {
+        return new Date(date).toString();
+    }
+
     return(
         <div>
-            <Link to="/createTicket"><button className="btn btn-info mt-1 mb-4">Create Ticket</button></Link>
+
+            <Link to={`/createTicket/${props.eventId}`}><button className="btn btn-info mt-1 mb-4">Create Ticket</button></Link>
 
             {props.ticketeditMode && <TicketEditForm onSubmit={props.onSubmit}
                                                      onChange={props.onChange}
-                                                     value={props.values.name}
+                                                     values={props.values}
             />}
             {!props.ticketeditMode && <div>
                 <ul>
@@ -18,7 +23,7 @@ export default function EventTicketsList(props) {
                         (<li key={ticket.id}><Link to={`/events/${props.eventId}/tickets/${ticket.id}`}><p>{ticket.description}</p></Link>
                             <div>
                                 <p>{ticket.picture}</p>
-                                <p>{ticket.startDate}</p>
+                                <p>{formatDate(ticket.endDate)}</p>
                                 <p>{ticket.price}</p>
                                 <button onClick={() => props.onDelete(ticket.id)}>X</button>
                                 <button onClick={() => props.onEdit(ticket)}>Edit</button>

@@ -4,12 +4,10 @@ const baseUrl = 'http://localhost:4000';
 
 export const createEvent = (event) => {
     return(dispatch, getState) => {
-
         request
             .post(`${baseUrl}/events`)
             .send(event)
             .then(response => {
-                //console.log(response.body)
                 dispatch(eventCreated(response.body))
             })
             .catch(error => console.error)
@@ -52,16 +50,16 @@ export const createComment = (comment, eventId, ticketId) => {
             .send(comment)
             .then(response => {
                 //console.log(response.body)
-                dispatch(commentCreated(response.body))
+                dispatch(commentCreated(response.body[0]))
             })
             .catch(error => console.error)
     }
 }
 
-const commentCreated = (comment) => ({
+const commentCreated = (comments) => ({
     type: 'COMMENT_CREATE_SUCCESS',
     payload: {
-        comment:comment
+        comments:comments
     }
 });
 
@@ -69,7 +67,7 @@ export const updateEvent = (event) => {
     return(dispatch, getState) => {
 
         request
-            .post(`${baseUrl}/events/${event.id}`)
+            .put(`${baseUrl}/events/${event.id}`)
             .send(event)
             .then(response => {
                 //console.log(response.body)
@@ -86,11 +84,10 @@ const eventUpdated = (eventUpdate) => ({
     }
 });
 
-export const updateTicket = (ticket) => {
+export const updateTicket = (eventId, ticket) => {
     return(dispatch, getState) => {
-
         request
-            .post(`${baseUrl}/ticket/${ticket.id}`)
+            .put(`${baseUrl}/events/${eventId}/tickets/${ticket.id}`)
             .send(ticket)
             .then(response => {
                 //console.log(response.body)
@@ -113,7 +110,6 @@ export const deleteEvent = (id) => {
         request
             .delete(`${baseUrl}/events/${id}`)
             .then(response => {
-                //console.log(response.body)
                 dispatch(eventDeleted(id))
             })
             .catch(error => console.error)
@@ -144,6 +140,26 @@ const ticketDeleted = (deletedTicketId) => ({
     type: 'TICKET_DELETE_SUCCESS',
     payload: {
         deletedTicketId:deletedTicketId
+    }
+});
+
+export const deleteComment = (ticketId, eventId, commentId) => {
+    return(dispatch, getState) => {
+
+        request
+            .delete(`${baseUrl}/events/${eventId}/tickets/${ticketId}/comments/${commentId}`)
+            .then(response => {
+                //console.log(response)
+                dispatch(commentDeleted(response.body[0]))
+            })
+            .catch(error => console.error)
+    }
+}
+
+const commentDeleted = (comments) => ({
+    type: 'COMMENT_DELETE_SUCCESS',
+    payload: {
+        comments:comments
     }
 });
 

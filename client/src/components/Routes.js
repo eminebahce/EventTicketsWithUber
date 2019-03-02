@@ -19,7 +19,7 @@ function Routes (props) {
             <Route path="/login" exact component={LoginFormContainer}/>
             <Route path="/register" exact component={SignUpFormContainer}/>
             <Route path="/createEvent" exact component={CreateEventFormContainer}/>
-            <Route path="/createTicket" exact component={CreateTicketFormContainer}/>
+            <Route path="/createTicket/:id" exact component={CreateTicketFormContainer}/>
         </div>
     );
 }

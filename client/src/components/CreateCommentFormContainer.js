@@ -12,7 +12,17 @@ class CreateCommentFormContainer extends React.Component{
 
     OnSubmit = (event) => {
         event.preventDefault();
-        this.props.createComment((this.state.text, this.state.author), this.props.eventId, this.props.ticketId);
+        this.props.createComment(
+            {
+                'text': this.state.text,
+                'author': this.state.author
+            },
+            this.props.eventId, this.props.ticketId);
+
+        this.setState({
+            text: '',
+            author: ''
+        })
     }
 
     onChange = (event) => {

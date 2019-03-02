@@ -14,7 +14,13 @@ class CreateTicketFormContainer extends React.Component{
 
     OnSubmit = (event) => {
         event.preventDefault();
-        this.props.createTicket((this.state.price, this.state.description, this.state.picture, this.state.endDate), this.props.eventId);
+        this.props.createTicket({
+           'price': this.state.price,
+            'description':this.state.description,
+            'picture':this.state.picture,
+           'endDate': this.state.endDate
+        }, this.props.match.params.id);
+        this.props.history.push(`/events/${this.props.match.params.id}/tickets`);
     }
 
     onChange = (event) => {

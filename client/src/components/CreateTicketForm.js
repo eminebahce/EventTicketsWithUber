@@ -32,7 +32,7 @@ export default function CreateTicketForm(props) {
                 </label>
                 <label>
                     End Date:
-                    <input type="date"
+                    <input type="datetime-local"
                            name="endDate"
                            onChange={props.onChange}
                            value={props.values.endDate}

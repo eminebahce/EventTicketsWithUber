@@ -23,14 +23,15 @@ class EventTicketsListContainer extends React.Component{
 
     onEdit = (ticket) => {
         this.setState({
-            ticketeditMode: true,
             formValues: {
                 id:ticket.id,
                 description: ticket.description,
                 picture: ticket.picture,
                 startDate: ticket.startDate,
                 price: ticket.price
-            }
+            },
+            ticketeditMode: true
+
         });
     };
 
@@ -48,7 +49,7 @@ class EventTicketsListContainer extends React.Component{
         this.setState({
             ticketeditMode: false
         });
-        this.props.updateTicket(this.state.formValues);
+        this.props.updateTicket(this.props.match.params.id, this.state.formValues);
     };
 
     render(){
@@ -64,7 +65,6 @@ class EventTicketsListContainer extends React.Component{
                     values={this.state.formValues}
                     ticketeditMode={this.state.ticketeditMode}
                 />
-                <CreateTicketFormContainer eventId={this.props.match.params.id} />
             </div>
         )
     };
@@ -72,7 +72,7 @@ class EventTicketsListContainer extends React.Component{
 }
 
 const mapStateToProps =(state) =>({
-    tickets: state.events
+    tickets: state.postoperations.tickets
 });
 
-export default connect(mapStateToProps, {loadTickets})(EventTicketsListContainer);
+export default connect(mapStateToProps, {loadTickets, deleteTicket,updateTicket})(EventTicketsListContainer);

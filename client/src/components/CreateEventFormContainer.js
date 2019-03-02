@@ -3,12 +3,12 @@ import CreateEventForm from './CreateEventForm';
 import {connect} from "react-redux";
 import {createEvent} from '../actions/postoperations'
 
-class CreateEventFormContainer extends React.Component{
+class CreateEventFormContainer extends React.Component {
 
     state = {
         name: '',
         description: '',
-        picture:'',
+        picture: '',
         startDate: new Date(),
         endDate: new Date()
     }
@@ -16,12 +16,15 @@ class CreateEventFormContainer extends React.Component{
     OnSubmit = (event) => {
         event.preventDefault();
         this.props.createEvent(
-            this.state.name,
-            this.state.description,
-            this.state.picture,
-            this.state.startDate,
-            this.state.endDate
+            {
+                'name': this.state.name,
+                'description': this.state.description,
+                'picture': this.state.picture,
+                'startDate': this.state.startDate,
+                'endDate': this.state.endDate
+            }
         )
+        this.props.history.push('/');
     }
 
     onChange = (event) => {
@@ -30,8 +33,8 @@ class CreateEventFormContainer extends React.Component{
         })
     }
 
-    render(){
-        return(
+    render() {
+        return (
             <CreateEventForm
                 onSubmit={this.OnSubmit}
                 onChange={this.onChange}

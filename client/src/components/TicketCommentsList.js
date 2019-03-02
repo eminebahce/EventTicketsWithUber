@@ -3,15 +3,18 @@ import {Link} from "react-router-dom";
 import CreateCommentFormContainer from './CreateCommentFormContainer'
 
 export default function TicketCommentsList(props) {
-    //console.log(props);
+
+    const formatDate = (date) => {
+        return new Date(date).toString();
+    }
 
     return (
         <div>
-            {(props.comments) &&
+            {(props.comments) && (props.comments.ticket) &&
             <div>
                 <div>
                     <p>{props.comments.ticket[0].description}</p>
-                    <p>{props.comments.ticket[0].endDate}</p>
+                    <p>{formatDate(props.comments.ticket[0].endDate)}</p>
                     <p>{props.comments.ticket[0].price}</p>
                     <p>{props.comments.ticket[0].picture}</p>
                 </div>
@@ -23,8 +26,11 @@ export default function TicketCommentsList(props) {
                 <div>
                     {(props.comments.ticket[0].comments) && props.comments.ticket[0].comments.map(comment =>
                         <li key={comment.id}>
-                        <p>{comment.text}</p>
-                        <p>{comment.createDate}</p>
+                            <p>{comment.text}</p>
+                            <p>{formatDate(comment.createDate)}</p>
+                            <p>
+                                <button onClick={() => props.onDelete(comment.id)}>X</button>
+                            </p>
                         </li>
                     )}
                 </div>

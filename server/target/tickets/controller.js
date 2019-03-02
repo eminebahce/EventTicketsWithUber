@@ -18,8 +18,9 @@ const typeorm_1 = require("typeorm");
 const entity_2 = require("../events/entity");
 let TicketController = class TicketController {
     async createEventsTicket(ticket, id) {
+        ticket.createDate = new Date();
         const ticketEntity = entity_1.default.create(ticket);
-        await ticketEntity.save();
+        const savedTicket = await ticketEntity.save();
         const events = await typeorm_1.getConnection()
             .getRepository(entity_2.default)
             .createQueryBuilder("event")
@@ -31,7 +32,7 @@ let TicketController = class TicketController {
             const eventEntity = entity_2.default.create(event);
             eventEntity.save();
         });
-        return events;
+        return savedTicket;
     }
     async getEventsTickets(id) {
         const events = await typeorm_1.getConnection()
@@ -41,6 +42,24 @@ let TicketController = class TicketController {
             .where("event.id = :id", { id: id })
             .getMany();
         return events;
+    }
+    async updateTicket(id, update) {
+        const ticket = await entity_1.default.findOne(id);
+        if (!ticket) {
+            throw new routing_controllers_1.NotFoundError('Can not find ticket');
+        }
+        else {
+            return entity_1.default.merge(ticket, update).save();
+        }
+    }
+    async deleteTicket(id) {
+        const deleteTicket = await entity_1.default.findOne(id);
+        if (!deleteTicket) {
+            throw new routing_controllers_1.NotFoundError('Can not find ticket');
+        }
+        else {
+            return entity_1.default.delete(deleteTicket);
+        }
     }
 };
 __decorate([
@@ -57,6 +76,20 @@ __decorate([
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], TicketController.prototype, "getEventsTickets", null);
+__decorate([
+    routing_controllers_1.Put('/events/:eventId/tickets/:id'),
+    __param(0, routing_controllers_1.Param('id')), __param(1, routing_controllers_1.Body()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, Object]),
+    __metadata("design:returntype", Promise)
+], TicketController.prototype, "updateTicket", null);
+__decorate([
+    routing_controllers_1.Delete('/events/:eventId/tickets/:id'),
+    __param(0, routing_controllers_1.Param('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], TicketController.prototype, "deleteTicket", null);
 TicketController = __decorate([
     routing_controllers_1.JsonController()
 ], TicketController);

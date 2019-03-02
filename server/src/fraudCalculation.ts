@@ -23,6 +23,7 @@ async function FraudCalculation(ticketId:number, eventId:number) {
 
     if(tickets.length > 1){
         risk += 10;
+        //console.log("MORE THAN ONE TICKET " + risk);
     }
 
     //average price of tickets of the event (only ticket repo!)
@@ -42,6 +43,7 @@ async function FraudCalculation(ticketId:number, eventId:number) {
     if(ticket!.price < eventTickets.avgPrice){
         const cheapRatio = ((eventTickets.avgPrice - ticket!.price) / eventTickets.avgPrice) * 100;
         risk += cheapRatio;
+        //console.log("CHEAPER " + risk);
     } else if (ticket!.price > eventTickets.avgPrice){
         const expensiveRatio = ((ticket!.price - eventTickets.avgPrice) / ticket!.price) * 100;
         if (expensiveRatio < 10) {
@@ -49,6 +51,8 @@ async function FraudCalculation(ticketId:number, eventId:number) {
         } else {
             risk -= 10;
         }
+
+        //console.log("EXPESIve " + risk );
     }
 
     //business hour addition of the ticket
@@ -67,8 +71,10 @@ async function FraudCalculation(ticketId:number, eventId:number) {
 
     if(hour >= start && hour <= end){
         risk -=10;
+        //console.log("WORK HOURS IN " + risk)
     } else {
       risk +=10;
+      //console.log("WORK HOURS OUT " + risk)
     }
 
     //number of comments of the tickets
@@ -78,8 +84,10 @@ async function FraudCalculation(ticketId:number, eventId:number) {
         .andWhere("comment.ticket_id = :id", {id:ticketId})
         .getMany();
 
+
     if (comments.length > 3) {
         risk += 10;
+        //console.log("Comment more than 3 " + risk);
     }
 
     //last check for risk limit
