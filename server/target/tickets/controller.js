@@ -25,18 +25,21 @@ let TicketController = class TicketController {
             .leftJoinAndSelect("user.events", "event")
             .leftJoinAndSelect("event.tickets", "ticket")
             .where("user.id = :id", { id: request.user.id })
-            .andWhere("event.id = :eventId", { eventId: eventId })
             .getOne();
-        if (user) {
+        const event = await typeorm_1.getConnection()
+            .getRepository(entity_2.default)
+            .createQueryBuilder("event")
+            .leftJoinAndSelect("event.tickets", "ticket")
+            .where("event.id = :eventId", { eventId: eventId })
+            .getOne();
+        if (user && event) {
             ticket.createDate = new Date();
             ticket.user = user;
             const ticketEntity = entity_1.default.create(ticket);
             const savedTicket = await ticketEntity.save();
-            user.events.map(event => {
-                event.tickets = [...event.tickets, ticketEntity];
-                const eventEntity = entity_2.default.create(event);
-                eventEntity.save();
-            });
+            event.tickets = [...event.tickets, ticketEntity];
+            const eventEntity = entity_2.default.create(event);
+            eventEntity.save();
             return savedTicket;
         }
         return "";

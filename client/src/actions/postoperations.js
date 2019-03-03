@@ -53,7 +53,7 @@ export const createComment = (comment, eventId, ticketId) => {
             .set('Authorization', 'Bearer ' + jwt.auth)
             .send(comment)
             .then(response => {
-                //console.log(response.body)
+                console.log(response.body[0])
                 dispatch(commentCreated(response.body[0]))
             })
             .catch(error => console.error)

@@ -45,26 +45,38 @@ let CommentController = class CommentController {
             .leftJoinAndSelect("event.tickets", "ticket")
             .leftJoinAndSelect("ticket.comments", "comment")
             .where("user.id = :id", { id: request.user.id })
+            .getOne();
+        const event = await typeorm_1.getConnection()
+            .getRepository(entity_2.default)
+            .createQueryBuilder("event")
+            .leftJoinAndSelect("event.tickets", "ticket")
+            .leftJoinAndSelect("ticket.comments", "comment")
             .andWhere("event.id = :eventId", { eventId: eventId })
             .andWhere("ticket.id = :ticketId", { ticketId })
             .getOne();
-        if (user) {
+        if (user && event) {
             comment.createDate = new Date();
             comment.user = user;
             const commentEntity = entity_1.default.create(comment);
             const savedComment = await commentEntity.save();
-            await Promise.all(user.events.map(async (event) => {
-                await Promise.all(event.tickets.map(async (ticket) => {
-                    ticket.comments = [...ticket.comments, savedComment];
-                    const ticketEntity = entity_3.default.create(ticket);
-                    await ticketEntity.save();
-                }));
+            await Promise.all(event.tickets.map(async (ticket) => {
+                ticket.comments = [...ticket.comments, savedComment];
+                const ticketEntity = entity_3.default.create(ticket);
+                await ticketEntity.save();
             }));
             let risk = 0;
-            if (user.events.length == 1) {
+            if (event) {
                 risk = await fraudCalculation_1.default(ticketId, eventId);
             }
-            return user.events.map(event => {
+            const events = await typeorm_1.getConnection()
+                .getRepository(entity_2.default)
+                .createQueryBuilder("event")
+                .leftJoinAndSelect("event.tickets", "ticket")
+                .leftJoinAndSelect("ticket.comments", "comment")
+                .where("event.id = :eventId", { eventId })
+                .andWhere("ticket.id = :ticketId", { ticketId })
+                .getMany();
+            return events.map(event => {
                 return { 'ticket': event.tickets, 'risk': risk };
             });
         }
@@ -74,20 +86,25 @@ let CommentController = class CommentController {
         const user = await typeorm_1.getConnection()
             .getRepository(entity_4.default)
             .createQueryBuilder("user")
-            .leftJoinAndSelect("user.events", "event")
+            .leftJoinAndSelect("user.comments", "comment")
+            .where("user.id = :id", { id: request.user.id })
+            .andWhere("comment.id = :commentId", { commentId: commentId })
+            .getOne();
+        const event = await typeorm_1.getConnection()
+            .getRepository(entity_2.default)
+            .createQueryBuilder("event")
             .leftJoinAndSelect("event.tickets", "ticket")
             .leftJoinAndSelect("ticket.comments", "comment")
-            .where("user.id = :id", { id: request.user.id })
             .andWhere("ticket.id = :ticketId", { ticketId: ticketId })
             .andWhere("comment.id = :commentId", { commentId: commentId })
             .getOne();
-        if (!user || user.events.length === 0 || user.events[0].tickets.length === 0 || user.events[0].tickets[0].comments.length === 0) {
+        if (!user || !event || event.tickets.length === 0 || event.tickets[0].comments.length === 0) {
             throw new routing_controllers_1.NotFoundError('Can not find comment');
         }
         else {
-            await entity_1.default.delete(user.events[0].tickets[0].comments[0]);
+            await entity_1.default.delete(event.tickets[0].comments[0]);
             let risk = 0;
-            if (user.events.length == 1) {
+            if (event) {
                 risk = await fraudCalculation_1.default(ticketId, eventId);
             }
             const events = await typeorm_1.getConnection()

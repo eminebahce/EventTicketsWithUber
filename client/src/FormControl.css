@@ -1,0 +1,37 @@
+.FormControl{
+    max-width: 380px;
+    padding: 15px 35px 45px;
+    margin: 0 auto;
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.form1-control {
+    position: relative;
+    font-size: 16px;
+    width: 100%;
+    padding: 5px;
+}
+
+
+.form2-control {
+    position: relative;
+    font-size: 16px;
+    width: 85%;
+    padding: 5px;
+}
+
+.form3-control {
+    position: relative;
+    font-size: 16px;
+    width: 75%;
+    padding: 5px;
+}
+
+
+.form4-control {
+    position: relative;
+    font-size: 16px;
+    width: 80%;
+    padding: 5px;
+}

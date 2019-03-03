@@ -10,7 +10,7 @@ import User from "../users/entity";
 export default class CommentController {
 
     @Get('/events/:eventId/tickets/:ticketId/comments')
-    async getEventsTicketsComments(@Param('eventId') eventId:number, @Param('ticketId') ticketId:number){
+    async getEventsTicketsComments(@Param('eventId') eventId: number, @Param('ticketId') ticketId: number) {
         const events = await getConnection()
             .getRepository(Event)
             .createQueryBuilder("event")
@@ -23,22 +23,22 @@ export default class CommentController {
         let risk = 0;
         //console.log(risk);
 
-        if(events.length == 1){
+        if (events.length == 1) {
             risk = await fraudCalculation(ticketId, eventId);
             //console.log("GET " +risk);
         }
 
         return events.map(event => {
-            return {'ticket':event.tickets, 'risk':risk};
+            return {'ticket': event.tickets, 'risk': risk};
         });
     }
 
     @Authorized()
     @Post('/events/:eventId/tickets/:ticketId/comments')
-    async createEventsTicketsComments(@Body() comment:Comment,
-                                      @Param('eventId') eventId:number,
-                                      @Param('ticketId') ticketId:number,
-                                      @Req() request: any){
+    async createEventsTicketsComments(@Body() comment: Comment,
+                                      @Param('eventId') eventId: number,
+                                      @Param('ticketId') ticketId: number,
+                                      @Req() request: any) {
 
         const user = await getConnection()
             .getRepository(User)
@@ -47,34 +47,48 @@ export default class CommentController {
             .leftJoinAndSelect("event.tickets", "ticket")
             .leftJoinAndSelect("ticket.comments", "comment")
             .where("user.id = :id", {id: request.user.id})
+            .getOne()
+
+        const event = await getConnection()
+            .getRepository(Event)
+            .createQueryBuilder("event")
+            .leftJoinAndSelect("event.tickets", "ticket")
+            .leftJoinAndSelect("ticket.comments", "comment")
             .andWhere("event.id = :eventId", {eventId: eventId})
             .andWhere("ticket.id = :ticketId", {ticketId})
             .getOne()
 
-        if (user) {
+        if (user && event) {
             comment.createDate = new Date();
             comment.user = user;
             const commentEntity = Comment.create(comment);
             const savedComment = await commentEntity.save();
 
-            await Promise.all(user.events.map(async event => {
-                await Promise.all(event.tickets.map(async ticket => {
-                    ticket.comments = [...ticket.comments, savedComment];
-                    const ticketEntity = Ticket.create(ticket);
-                    await ticketEntity.save();
-                }))
+            await Promise.all(event.tickets.map(async ticket => {
+                ticket.comments = [...ticket.comments, savedComment];
+                const ticketEntity = Ticket.create(ticket);
+                await ticketEntity.save();
             }));
 
             let risk = 0;
             //console.log(risk);
 
-            if (user.events.length == 1) {
+            if (event) {
                 risk = await fraudCalculation(ticketId, eventId);
                 //console.log("POST: " + risk);
             }
 
-            return user.events.map(event => {
-                return {'ticket': event.tickets, 'risk': risk}
+            const events = await getConnection()
+                .getRepository(Event)
+                .createQueryBuilder("event")
+                .leftJoinAndSelect("event.tickets", "ticket")
+                .leftJoinAndSelect("ticket.comments", "comment")
+                .where("event.id = :eventId", {eventId})
+                .andWhere("ticket.id = :ticketId", {ticketId})
+                .getMany();
+
+            return events.map(event => {
+                return {'ticket': event.tickets, 'risk': risk};
             });
         }
         return "";
@@ -82,30 +96,36 @@ export default class CommentController {
 
     @Authorized()
     @Delete('/events/:eventId/tickets/:ticketId/comments/:commentId')
-    async deleteComment(@Param('commentId') commentId:number,
+    async deleteComment(@Param('commentId') commentId: number,
                         @Param('eventId') eventId: number,
                         @Param('ticketId') ticketId: number,
-                        @Req() request: any){
+                        @Req() request: any) {
 
         const user = await getConnection()
             .getRepository(User)
             .createQueryBuilder("user")
-            .leftJoinAndSelect("user.events", "event")
+            .leftJoinAndSelect("user.comments", "comment")
+            .where("user.id = :id", {id: request.user.id})
+            .andWhere("comment.id = :commentId", {commentId: commentId})
+            .getOne()
+
+        const event = await getConnection()
+            .getRepository(Event)
+            .createQueryBuilder("event")
             .leftJoinAndSelect("event.tickets", "ticket")
             .leftJoinAndSelect("ticket.comments", "comment")
-            .where("user.id = :id", {id: request.user.id})
             .andWhere("ticket.id = :ticketId", {ticketId: ticketId})
             .andWhere("comment.id = :commentId", {commentId: commentId})
             .getOne()
 
-        if(!user||user.events.length===0||user.events[0].tickets.length===0||user.events[0].tickets[0].comments.length===0){
+        if (!user || !event || event.tickets.length === 0 || event.tickets[0].comments.length === 0) {
             throw new NotFoundError('Can not find comment');
         } else {
-            await Comment.delete(user.events[0].tickets[0].comments[0]);
+            await Comment.delete(event.tickets[0].comments[0]);
             let risk = 0;
             //console.log(risk);
 
-            if(user.events.length == 1){
+            if (event) {
                 risk = await fraudCalculation(ticketId, eventId);
                 //console.log("Delete" + risk);
             }
@@ -120,7 +140,7 @@ export default class CommentController {
                 .getMany();
 
             return events.map(event => {
-                return {'ticket':event.tickets, 'risk':risk};
+                return {'ticket': event.tickets, 'risk': risk};
             });
         }
     }

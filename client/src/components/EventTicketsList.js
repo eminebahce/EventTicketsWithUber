@@ -15,30 +15,50 @@ export default function EventTicketsList(props) {
     }
 
     return(
-        <div>
-
-            <Link to={`/createTicket/${props.eventId}`}><button className="btn btn-info mt-1 mb-4">Create Ticket</button></Link>
-
-            {props.ticketeditMode && <TicketEditForm onSubmit={props.onSubmit}
-                                                     onChange={props.onChange}
-                                                     values={props.values}
-            />}
-            {!props.ticketeditMode && <div>
-                <ul>
-                    {props.tickets && props.tickets.map((ticket)=>
-                        (<li key={ticket.id}><Link to={`/events/${props.eventId}/tickets/${ticket.id}`}><p>{ticket.description}</p></Link>
-                            <div>
-                                <p>{ticket.picture}</p>
-                                <p>{formatDate(ticket.endDate)}</p>
-                                <p>{ticket.price}</p>
-                                <button onClick={() => props.onDelete(ticket.id)}>X</button>
-                                <button onClick={() => props.onEdit(ticket)}>Edit</button>
+        <div className="container">
+            <div className="row">
+                <Link to={`/createTicket/${props.eventId}`}>
+                    <button className="btn btn-info mt-1 mb-4">Create Ticket</button>
+                </Link>
+            </div>
+            <div className="row">
+                {props.ticketeditMode && <TicketEditForm onSubmit={props.onSubmit}
+                                                         onChange={props.onChange}
+                                                         values={props.values}
+                />}
+            </div>
+            {!props.ticketeditMode &&
+            <div className="row">
+                {props.tickets && props.tickets.map((ticket)=>
+                    <div key={ticket.id} className='img-thumbnail mr-1 mb-4'>
+                        <div className="col-sm-5">
+                            <img className='img-responsive tile-img'
+                                 src={ticket.picture}/>
+                        </div>
+                        <div className="col-sm-7 tile">
+                            <div className='tile-info'>
+                                <div className="row">
+                                    <Link to={`/events/${props.eventId}/tickets/${ticket.id}`}><h1>{ticket.description}</h1></Link>
+                                </div>
+                                <div className="row">
+                                    <h5>{ticket.price}</h5>
+                                </div>
+                                <div className="row">
+                                    <h6>{formatDate(ticket.endDate)}</h6>
+                                </div>
+                                <div className="row">
+                                    <button className="btn btn-danger btn-sm mt-1 mr-1"  onClick={() => props.onDelete(ticket.id)}>X</button>
+                                    <button className="btn btn-info btn-sm mt-1 mr-1" onClick={() => props.onEdit(ticket)}>Edit</button>
+                                </div>
                             </div>
-                        </li>)
-                    )}
-                    {!props.tickets && <li>Loading tickets...</li>}
-                </ul>
-            </div>}
+                        </div>
+                    </div>
+                )}
+            </div>
+            }
+            <div className="row">
+                {!props.tickets && <li>Loading tickets...</li>}
+            </div>
         </div>
     );
 }
