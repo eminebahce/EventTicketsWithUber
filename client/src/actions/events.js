@@ -2,21 +2,21 @@ import request from 'superagent';
 
 const baseUrl = 'http://localhost:4000';
 
-export const loadEvents = () => {
+export const loadEvents = (skip = 0, take = 9) => {
     return(dispatch, getState) => {
-        request(`${baseUrl}/events`)
+        request(`${baseUrl}/events/?skip=${skip}&take=${take}`)
             .then(response => {
-                //console.log(response.body)
-                dispatch(eventsFetched(response.body.events))
+                dispatch(eventsFetched(response.body))
             })
             .catch(error => console.error)
     }
 }
 
-const eventsFetched = (events) => ({
+const eventsFetched = (response) => ({
     type: 'EVENTS_FETCHED',
     payload: {
-        events:events
+        events:response.events,
+        total:response.total
     }
 });
 

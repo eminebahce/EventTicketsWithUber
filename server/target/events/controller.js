@@ -17,14 +17,19 @@ const entity_2 = require("../users/entity");
 const routing_controllers_1 = require("routing-controllers");
 const typeorm_1 = require("typeorm");
 let EventController = class EventController {
-    async getEvents() {
+    async getEvents(skip, take) {
         const currentDate = new Date();
-        const events = await typeorm_1.getConnection()
+        const [events, total] = await typeorm_1.getConnection()
             .getRepository(entity_1.default)
             .createQueryBuilder("event")
             .where("event.endDate >= :currentDate", { currentDate: currentDate })
-            .getMany();
-        return { events };
+            .skip(skip)
+            .take(take)
+            .getManyAndCount();
+        return {
+            "events": events,
+            "total": total
+        };
     }
     async createEvents(event, request) {
         const user = await typeorm_1.getConnection()
@@ -78,8 +83,9 @@ let EventController = class EventController {
 };
 __decorate([
     routing_controllers_1.Get('/events'),
+    __param(0, routing_controllers_1.QueryParam("skip")), __param(1, routing_controllers_1.QueryParam("take")),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [Number, Number]),
     __metadata("design:returntype", Promise)
 ], EventController.prototype, "getEvents", null);
 __decorate([

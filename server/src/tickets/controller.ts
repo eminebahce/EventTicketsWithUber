@@ -84,7 +84,7 @@ export default class TicketController {
             .where("user.id = :id", {id: request.user.id})
             .andWhere("event.id = :eventId", {eventId: eventId})
             .andWhere("ticket.id = :ticketId", {ticketId:ticketId})
-            .getOne()
+            .getOne();
 
         if(!user||user.events.length === 0 || user.events[0].tickets.length === 0 ){
             throw new NotFoundError('Can not find ticket');

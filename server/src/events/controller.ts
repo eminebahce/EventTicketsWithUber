@@ -1,20 +1,25 @@
 import Event from './entity';
 import User from '../users/entity';
-import {Get, Post, JsonController, Body, Put, Param, NotFoundError, Delete, Authorized, Req} from "routing-controllers";
+import {Get, Post, JsonController, Body, Put, Param, NotFoundError, Delete, Authorized, Req, QueryParam} from "routing-controllers";
 import {getConnection} from "typeorm";
 
 @JsonController()
 export default class EventController {
 
     @Get('/events')
-    async getEvents() {
+    async getEvents(@QueryParam("skip") skip: number, @QueryParam("take") take: number) {
         const currentDate = new Date();
-        const events = await getConnection()
+        const [events, total] = await getConnection()
             .getRepository(Event)
             .createQueryBuilder("event")
             .where("event.endDate >= :currentDate", {currentDate: currentDate})
-            .getMany();
-        return {events}
+            .skip(skip)
+            .take(take)
+            .getManyAndCount()
+        return {
+            "events": events,
+            "total": total
+        }
     }
 
     @Authorized()

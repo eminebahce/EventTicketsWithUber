@@ -75,7 +75,7 @@ async function FraudCalculation(ticketId, eventId) {
     else if (risk > 95) {
         risk = 95;
     }
-    return risk;
+    return Math.floor(risk);
 }
 exports.default = FraudCalculation;
 //# sourceMappingURL=fraudCalculation.js.map

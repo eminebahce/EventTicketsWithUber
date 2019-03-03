@@ -2,15 +2,16 @@ const initialState = {
   events: [],
   tickets: [],
   comments: [],
+  totalEvents: 0
 };
-
 
 const reducer = (state = initialState, action = {}) => {
     switch (action.type) {
         case 'EVENTS_FETCHED':
             return {
                 ...state,
-                events: action.payload.events
+                events: action.payload.events,
+                totalEvents: action.payload.total
             }
         case 'TICKETS_FETCHED':
             return {
@@ -23,10 +24,15 @@ const reducer = (state = initialState, action = {}) => {
                 comments: action.payload.comments,
             }
         case 'EVENT_CREATE_SUCCESS':
+            if (state.events.length < 9) {
+                state.events = [...state.events, action.payload.event]
+            }
+
             return {
                 ...state,
-                events: [...state.events, action.payload.event]
-            }
+                events: state.events,
+                totalEvents: state.totalEvents + 1
+            };
         case 'TICKET_CREATE_SUCCESS':
             return {
                 ...state,
@@ -62,7 +68,8 @@ const reducer = (state = initialState, action = {}) => {
         case 'EVENT_DELETE_SUCCESS':
             return {
                 ...state,
-                events: state.events.filter(event => event.id !== action.payload.deletedEventId)
+                events: state.events.filter(event => event.id !== action.payload.deletedEventId),
+                totalEvents: state.totalEvents - 1
             }
         case 'TICKET_DELETE_SUCCESS':
             return {

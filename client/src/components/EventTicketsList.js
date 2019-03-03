@@ -5,7 +5,13 @@ import TicketEditForm from './TicketEditForm';
 export default function EventTicketsList(props) {
 
     const formatDate = (date) => {
-        return new Date(date).toString();
+        const dateObject = new Date(date);
+        return dateObject.getFullYear() + "/" +
+            ("0" + (dateObject.getMonth()+1)).slice(-2) + "/" +
+            ("0" + dateObject.getDate()).slice(-2) + " " +
+            ("0" + dateObject.getHours()).slice(-2) + ":" +
+            ("0" + dateObject.getMinutes()).slice(-2) + ":" +
+            ("0" + dateObject.getSeconds()).slice(-2);
     }
 
     return(

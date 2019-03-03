@@ -4,8 +4,6 @@ const baseUrl = 'http://localhost:4000';
 
 export const createEvent = (event) => {
     return(dispatch, getState) => {
-        //console.log('VVV',localStorage.getItem('user'));
-        //console.log('create event', getState().auth);
         const jwt = getState().auth;
         request
             .post(`${baseUrl}/events`)

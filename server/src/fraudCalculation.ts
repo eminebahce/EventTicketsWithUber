@@ -97,7 +97,7 @@ async function FraudCalculation(ticketId:number, eventId:number) {
         risk = 95;
     }
 
-    return risk;
+    return Math.floor(risk);
 }
 
 export default FraudCalculation;

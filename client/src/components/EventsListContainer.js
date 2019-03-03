@@ -4,35 +4,48 @@ import EventsList from './EventsList';
 import {loadEvents} from '../actions/events';
 import {deleteEvent, updateEvent} from '../actions/postoperations';
 
-class EventsListContainer extends React.Component{
+class EventsListContainer extends React.Component {
 
     state = {
         editMode: false,
-        formValues:{}
+        formValues: {},
+        skip: 0,
     };
 
     componentDidMount() {
         this.props.loadEvents();
     };
 
+    onLoadEvents = (totalPages) => {
+        if (totalPages === 1 ){
+
+        } else if ((this.state.skip * 9) > totalPages) {
+            this.props.loadEvents(0);
+            this.setState({skip: 0})
+        } else {
+            this.props.loadEvents((this.state.skip + 1) * 9);
+            this.setState({skip: this.state.skip + 1})
+        }
+    }
+
     onDelete = (id) => {
         this.props.deleteEvent(id);
-        this.props.history.push('/');
+        window.location = "/";
     };
 
     onEdit = (event) => {
         //console.log(event);
-       this.setState({
-           formValues: {
-               id: event.id,
-               name: event.name,
-               description: event.description,
-               picture: event.picture,
-               startDate: event.startDate,
-               endDate: event.endDate
-           },
-           editMode: true
-       })
+        this.setState({
+            formValues: {
+                id: event.id,
+                name: event.name,
+                description: event.description,
+                picture: event.picture,
+                startDate: event.startDate,
+                endDate: event.endDate
+            },
+            editMode: true
+        })
     };
 
     onChange = (event) => {
@@ -45,7 +58,7 @@ class EventsListContainer extends React.Component{
     };
 
     onSubmit = (event) => {
-       event.preventDefault();
+        event.preventDefault();
         this.props.updateEvent(this.state.formValues);
         this.setState({
             editMode: false
@@ -53,7 +66,7 @@ class EventsListContainer extends React.Component{
     };
 
     render() {
-        return(
+        return (
             <div>
                 <EventsList
                     events={this.props.events}
@@ -63,6 +76,8 @@ class EventsListContainer extends React.Component{
                     onSubmit={this.onSubmit}
                     values={this.state.formValues}
                     editMode={this.state.editMode}
+                    total={this.props.total}
+                    onSkipPage={this.onLoadEvents}
                 />
             </div>
         )
@@ -71,7 +86,8 @@ class EventsListContainer extends React.Component{
 
 const mapStateToProps = (state) => {
     return {
-        events: state.postoperations.events
+        events: state.postoperations.events,
+        total: state.postoperations.totalEvents
     }
 };
 
