@@ -26,7 +26,10 @@ const app = createKoaServer({
             const [, token] = header.split(' ')
 
             try{
-                return  !!(token && verify(token))
+                const verification = !!(token && verify(token))
+                const user = verify(token)
+                action.request.user = user;
+                return verification
             }
             catch (e) {
                 throw new BadRequestError(e)

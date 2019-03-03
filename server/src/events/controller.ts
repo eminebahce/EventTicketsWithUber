@@ -1,12 +1,13 @@
 import Event from './entity';
-import {Get, Post, JsonController, Body, Put, Param, NotFoundError, Delete} from "routing-controllers";
+import User from '../users/entity';
+import {Get, Post, JsonController, Body, Put, Param, NotFoundError, Delete, Authorized, Req} from "routing-controllers";
 import {getConnection} from "typeorm";
 
 @JsonController()
 export default class EventController {
 
     @Get('/events')
-    async getEvents(){
+    async getEvents() {
         const currentDate = new Date();
         const events = await getConnection()
             .getRepository(Event)
@@ -16,33 +17,63 @@ export default class EventController {
         return {events}
     }
 
+    @Authorized()
     @Post('/events')
-    async createEvents(@Body() event: Event){
-        event.createDate = new Date();
-        const eventEntity = Event.create(event)
-        const savedEvent = await eventEntity.save()
-        return savedEvent
+    async createEvents(@Body() event: Event, @Req() request: any) {
+        const user = await getConnection()
+            .getRepository(User)
+            .createQueryBuilder("user")
+            .leftJoinAndSelect("user.events", "event")
+            .where("user.id = :id", {id: request.user.id})
+            .getOne();
+
+        if (user) {
+            event.createDate = new Date();
+            event.user = user;
+            const eventEntity = Event.create(event)
+            return await eventEntity.save()
+        }
+        return "";
     }
 
-    @Put('/events/:id')
-    async updateEvent(@Param('id') id:number, @Body() update:Partial<Event>){
-        const event = await Event.findOne(id);
-        if(!event){
-            throw new NotFoundError('Can not find event');
-        } else {
-            return Event.merge(event, update).save();
+    @Authorized()
+    @Put('/events/:eventId')
+    async updateEvent(@Param('eventId') eventId: number, @Body() update: Partial<Event>, @Req() request: any) {
+        const user = await getConnection()
+            .getRepository(User)
+            .createQueryBuilder("user")
+            .leftJoinAndSelect("user.events", "event")
+            .where("user.id = :id", {id: request.user.id})
+            .andWhere("event.id = :eventId", {eventId: eventId})
+            .getOne();
+
+        if (user) {
+            const event = user.events[0];
+            if (!event) {
+                throw new NotFoundError('Can not find event');
+            } else {
+                return Event.merge(event, update).save();
+            }
         }
+        return "";
     }
 
-    @Delete('/events/:id')
-    async deleteEvent(@Param('id') id:number){
-        const deleteEvent = await Event.findOne(id)
-        if(!deleteEvent){
+    @Authorized()
+    @Delete('/events/:eventId')
+    async deleteEvent(@Param('eventId') eventId: number, @Req() request: any) {
+        const user = await getConnection()
+            .getRepository(User)
+            .createQueryBuilder("user")
+            .leftJoinAndSelect("user.events", "event")
+            .where("user.id = :id", {id: request.user.id})
+            .andWhere("event.id = :eventId", {eventId: eventId})
+            .getOne();
+
+        if (!user || user.events.length === 0) {
             throw new NotFoundError('Can not find event');
         } else {
-            return Event.delete(deleteEvent);
+            return Event.delete(user.events[0]);
         }
-        return id;
     }
 
 

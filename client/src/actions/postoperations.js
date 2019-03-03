@@ -4,8 +4,12 @@ const baseUrl = 'http://localhost:4000';
 
 export const createEvent = (event) => {
     return(dispatch, getState) => {
+        //console.log('VVV',localStorage.getItem('user'));
+        //console.log('create event', getState().auth);
+        const jwt = getState().auth;
         request
             .post(`${baseUrl}/events`)
+            .set('Authorization', 'Bearer ' + jwt.auth)
             .send(event)
             .then(response => {
                 dispatch(eventCreated(response.body))
@@ -23,12 +27,13 @@ const eventCreated = (event) => ({
 
 export const createTicket = (ticket, eventId) => {
     return(dispatch, getState) => {
-
+        const jwt = getState().auth;
         request
             .post(`${baseUrl}/events/${eventId}/tickets`)
+            .set('Authorization', 'Bearer ' + jwt.auth)
             .send(ticket)
             .then(response => {
-                //console.log(response.body)
+                console.log(response.body)
                 dispatch(ticketCreated(response.body))
             })
             .catch(error => console.error)
@@ -44,9 +49,10 @@ const ticketCreated = (ticket) => ({
 
 export const createComment = (comment, eventId, ticketId) => {
     return(dispatch, getState) => {
-
+        const jwt = getState().auth;
         request
             .post(`${baseUrl}/events/${eventId}/tickets/${ticketId}/comments`)
+            .set('Authorization', 'Bearer ' + jwt.auth)
             .send(comment)
             .then(response => {
                 //console.log(response.body)
@@ -65,9 +71,10 @@ const commentCreated = (comments) => ({
 
 export const updateEvent = (event) => {
     return(dispatch, getState) => {
-
+        const jwt = getState().auth;
         request
             .put(`${baseUrl}/events/${event.id}`)
+            .set('Authorization', 'Bearer ' + jwt.auth)
             .send(event)
             .then(response => {
                 //console.log(response.body)
@@ -86,8 +93,10 @@ const eventUpdated = (eventUpdate) => ({
 
 export const updateTicket = (eventId, ticket) => {
     return(dispatch, getState) => {
+        const jwt = getState().auth;
         request
             .put(`${baseUrl}/events/${eventId}/tickets/${ticket.id}`)
+            .set('Authorization', 'Bearer ' + jwt.auth)
             .send(ticket)
             .then(response => {
                 //console.log(response.body)
@@ -106,9 +115,10 @@ const ticketUpdated = (ticketUpdate) => ({
 
 export const deleteEvent = (id) => {
     return(dispatch, getState) => {
-
+        const jwt = getState().auth;
         request
             .delete(`${baseUrl}/events/${id}`)
+            .set('Authorization', 'Bearer ' + jwt.auth)
             .then(response => {
                 dispatch(eventDeleted(id))
             })
@@ -125,9 +135,10 @@ const eventDeleted = (deletedEventId) => ({
 
 export const deleteTicket = (id, eventId) => {
     return(dispatch, getState) => {
-
+        const jwt = getState().auth;
         request
             .delete(`${baseUrl}/events/${eventId}/tickets/${id}`)
+            .set('Authorization', 'Bearer ' + jwt.auth)
             .then(response => {
                 //console.log(response.body)
                 dispatch(ticketDeleted(id))
@@ -143,13 +154,14 @@ const ticketDeleted = (deletedTicketId) => ({
     }
 });
 
-export const deleteComment = (ticketId, eventId, commentId) => {
+export const deleteComment = (eventId,ticketId, commentId) => {
     return(dispatch, getState) => {
-
+        const jwt = getState().auth;
         request
             .delete(`${baseUrl}/events/${eventId}/tickets/${ticketId}/comments/${commentId}`)
+            .set('Authorization', 'Bearer ' + jwt.auth)
             .then(response => {
-                //console.log(response)
+                console.log(response.body[0])
                 dispatch(commentDeleted(response.body[0]))
             })
             .catch(error => console.error)

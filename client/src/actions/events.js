@@ -4,7 +4,6 @@ const baseUrl = 'http://localhost:4000';
 
 export const loadEvents = () => {
     return(dispatch, getState) => {
-
         request(`${baseUrl}/events`)
             .then(response => {
                 //console.log(response.body)
@@ -22,7 +21,8 @@ const eventsFetched = (events) => ({
 });
 
 export const loadTickets = (id) => {
-    return(dispatch) => {
+    return(dispatch, getState) => {
+        //console.log(getState().auth);
         request(`${baseUrl}/events/${id}/tickets`)
             .then(response => {
                 //console.log(response.body[0].tickets)

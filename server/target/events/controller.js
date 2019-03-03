@@ -13,6 +13,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const entity_1 = require("./entity");
+const entity_2 = require("../users/entity");
 const routing_controllers_1 = require("routing-controllers");
 const typeorm_1 = require("typeorm");
 let EventController = class EventController {
@@ -25,30 +26,54 @@ let EventController = class EventController {
             .getMany();
         return { events };
     }
-    async createEvents(event) {
-        event.createDate = new Date();
-        const eventEntity = entity_1.default.create(event);
-        const savedEvent = await eventEntity.save();
-        return savedEvent;
+    async createEvents(event, request) {
+        const user = await typeorm_1.getConnection()
+            .getRepository(entity_2.default)
+            .createQueryBuilder("user")
+            .leftJoinAndSelect("user.events", "event")
+            .where("user.id = :id", { id: request.user.id })
+            .getOne();
+        if (user) {
+            event.createDate = new Date();
+            event.user = user;
+            const eventEntity = entity_1.default.create(event);
+            return await eventEntity.save();
+        }
+        return "";
     }
-    async updateEvent(id, update) {
-        const event = await entity_1.default.findOne(id);
-        if (!event) {
+    async updateEvent(eventId, update, request) {
+        const user = await typeorm_1.getConnection()
+            .getRepository(entity_2.default)
+            .createQueryBuilder("user")
+            .leftJoinAndSelect("user.events", "event")
+            .where("user.id = :id", { id: request.user.id })
+            .andWhere("event.id = :eventId", { eventId: eventId })
+            .getOne();
+        if (user) {
+            const event = user.events[0];
+            if (!event) {
+                throw new routing_controllers_1.NotFoundError('Can not find event');
+            }
+            else {
+                return entity_1.default.merge(event, update).save();
+            }
+        }
+        return "";
+    }
+    async deleteEvent(eventId, request) {
+        const user = await typeorm_1.getConnection()
+            .getRepository(entity_2.default)
+            .createQueryBuilder("user")
+            .leftJoinAndSelect("user.events", "event")
+            .where("user.id = :id", { id: request.user.id })
+            .andWhere("event.id = :eventId", { eventId: eventId })
+            .getOne();
+        if (!user || user.events.length === 0) {
             throw new routing_controllers_1.NotFoundError('Can not find event');
         }
         else {
-            return entity_1.default.merge(event, update).save();
+            return entity_1.default.delete(user.events[0]);
         }
-    }
-    async deleteEvent(id) {
-        const deleteEvent = await entity_1.default.findOne(id);
-        if (!deleteEvent) {
-            throw new routing_controllers_1.NotFoundError('Can not find event');
-        }
-        else {
-            return entity_1.default.delete(deleteEvent);
-        }
-        return id;
     }
 };
 __decorate([
@@ -58,24 +83,27 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], EventController.prototype, "getEvents", null);
 __decorate([
+    routing_controllers_1.Authorized(),
     routing_controllers_1.Post('/events'),
-    __param(0, routing_controllers_1.Body()),
+    __param(0, routing_controllers_1.Body()), __param(1, routing_controllers_1.Req()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [entity_1.default]),
+    __metadata("design:paramtypes", [entity_1.default, Object]),
     __metadata("design:returntype", Promise)
 ], EventController.prototype, "createEvents", null);
 __decorate([
-    routing_controllers_1.Put('/events/:id'),
-    __param(0, routing_controllers_1.Param('id')), __param(1, routing_controllers_1.Body()),
+    routing_controllers_1.Authorized(),
+    routing_controllers_1.Put('/events/:eventId'),
+    __param(0, routing_controllers_1.Param('eventId')), __param(1, routing_controllers_1.Body()), __param(2, routing_controllers_1.Req()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, Object]),
+    __metadata("design:paramtypes", [Number, Object, Object]),
     __metadata("design:returntype", Promise)
 ], EventController.prototype, "updateEvent", null);
 __decorate([
-    routing_controllers_1.Delete('/events/:id'),
-    __param(0, routing_controllers_1.Param('id')),
+    routing_controllers_1.Authorized(),
+    routing_controllers_1.Delete('/events/:eventId'),
+    __param(0, routing_controllers_1.Param('eventId')), __param(1, routing_controllers_1.Req()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
+    __metadata("design:paramtypes", [Number, Object]),
     __metadata("design:returntype", Promise)
 ], EventController.prototype, "deleteEvent", null);
 EventController = __decorate([

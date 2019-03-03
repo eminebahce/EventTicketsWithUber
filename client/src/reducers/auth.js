@@ -1,11 +1,20 @@
-
-const reducer = (state= null, action = {}) => {
+const initialState = {
+    auth: {}
+}
+const reducer = (state= initialState, action = {}) => {
     switch (action.type) {
         case 'LOGIN_SUCCESS':
-            return action.payload.token
+            return {
+                auth: action.payload.token
+            };
+
         case 'SIGNUP_SUCCESS':
-            return action.payload.user
+            return {
+                auth: action.payload.user
+            }
         default:
             return state;
     }
 };
+
+export default reducer;

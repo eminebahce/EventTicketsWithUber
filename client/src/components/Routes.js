@@ -23,6 +23,8 @@ function Routes (props) {
         </div>
     );
 }
-const mapStateToProps = (state) =>({state})
+const mapStateToProps = (state) =>({
+    authenticated: !!state.auth
+})
 
 export default withRouter(connect(mapStateToProps)(Routes))

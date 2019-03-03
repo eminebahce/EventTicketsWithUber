@@ -24,7 +24,10 @@ const app = routing_controllers_1.createKoaServer({
         if (header && header.startsWith('Bearer ')) {
             const [, token] = header.split(' ');
             try {
-                return !!(token && jwt_1.verify(token));
+                const verification = !!(token && jwt_1.verify(token));
+                const user = jwt_1.verify(token);
+                action.request.user = user;
+                return verification;
             }
             catch (e) {
                 throw new routing_controllers_1.BadRequestError(e);
