@@ -71,9 +71,6 @@ export default function EventsList(props) {
             <div className="row">
                 {!props.events && <li>Loading events...</li>}
             </div>
-            <div className="row">
-                <p> {props.total}</p>
-            </div>
         </div>
     )
 }

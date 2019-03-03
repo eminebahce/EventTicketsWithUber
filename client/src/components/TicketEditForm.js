@@ -1,43 +1,58 @@
 import React from 'react';
+import FormControl from '../FormControl.css'
 
 export default function TicketEditForm(props) {
 
     return(
-        <div>
+        <div className="FormControl">
             <form onSubmit={props.onSubmit}>
-                <h2>Edit Ticket</h2>
-                <label>
-                    Ticket Description:
-                    <input type="text"
-                           name="description"
-                           onChange={props.onChange}
-                           value={props.values.description}
-                    />
-                </label>
-                <label>
-                    Ticket Picture:
-                    <input type="text"
-                           name="picture"
-                           onChange={props.onChange}
-                           value={props.values.picture}
-                    />
-                </label>
-                <label>
-                    Price:
-                    <input type="number"
-                           name="price"
-                           onChange={props.onChange}
-                           value={props.values.price}
-                    />
-                </label>
-                <label>
-                    End Date:
-                    <input type="datetime-local"
-                           name="endDate"
-                           onChange={props.onChange}
-                           value={props.values.endDate}
-                    />
-                </label>
+                <div className="form-group">
+                    <h2>Edit Ticket</h2>
+                </div>
+                <div className="form-group">
+                    <label>
+                        Ticket Description:
+                        <input type="text"
+                               name="description"
+                               className="form3-control"
+                               onChange={props.onChange}
+                               value={props.values.description}
+                        />
+                    </label>
+                </div>
+                <div className="form-group">
+                    <label>
+                        Ticket Picture:
+                        <input type="text"
+                               name="picture"
+                               className="form4-control"
+                               onChange={props.onChange}
+                               value={props.values.picture}
+                        />
+                    </label>
+                </div>
+                <div className="form-group">
+                    <label>
+                        Price:
+                        <input type="number"
+                               name="price"
+                               className="form1-control"
+                               onChange={props.onChange}
+                               value={props.values.price}
+                        />
+                    </label>
+                </div>
+                <div className="form-group">
+                    <label>
+                        End Date:
+                        <input type="datetime-local"
+                               name="endDate"
+                               className="form-control"
+                               onChange={props.onChange}
+                               value={props.values.endDate}
+                        />
+                    </label>
+                </div>
                 <button type="submit">Edit Ticket</button>
             </form>
         </div>
