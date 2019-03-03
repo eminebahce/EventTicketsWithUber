@@ -53,18 +53,16 @@ let TicketController = class TicketController {
             .getMany();
         return events;
     }
-    async updateTicket(eventId, ticketId, update, request) {
+    async updateTicket(ticketId, update, request) {
         const user = await typeorm_1.getConnection()
             .getRepository(entity_3.default)
             .createQueryBuilder("user")
-            .leftJoinAndSelect("user.events", "event")
-            .leftJoinAndSelect("event.tickets", "ticket")
+            .leftJoinAndSelect("user.tickets", "ticket")
             .where("user.id = :id", { id: request.user.id })
-            .andWhere("event.id = :eventId", { eventId: eventId })
             .andWhere("ticket.id = :ticketId", { ticketId: ticketId })
             .getOne();
         if (user) {
-            const ticket = user.events[0].tickets[0];
+            const ticket = user.tickets[0];
             if (!ticket) {
                 throw new routing_controllers_1.NotFoundError('Can not find ticket');
             }
@@ -74,21 +72,19 @@ let TicketController = class TicketController {
         }
         return "";
     }
-    async deleteTicket(eventId, ticketId, request) {
+    async deleteTicket(ticketId, request) {
         const user = await typeorm_1.getConnection()
             .getRepository(entity_3.default)
             .createQueryBuilder("user")
-            .leftJoinAndSelect("user.events", "event")
-            .leftJoinAndSelect("event.tickets", "ticket")
+            .leftJoinAndSelect("user.tickets", "ticket")
             .where("user.id = :id", { id: request.user.id })
-            .andWhere("event.id = :eventId", { eventId: eventId })
             .andWhere("ticket.id = :ticketId", { ticketId: ticketId })
             .getOne();
-        if (!user || user.events.length === 0 || user.events[0].tickets.length === 0) {
+        if (!user || !user.tickets[0]) {
             throw new routing_controllers_1.NotFoundError('Can not find ticket');
         }
         else {
-            return entity_1.default.delete(user.events[0].tickets[0]);
+            return entity_1.default.delete(user.tickets[0]);
         }
     }
 };
@@ -110,17 +106,17 @@ __decorate([
 __decorate([
     routing_controllers_1.Authorized(),
     routing_controllers_1.Put('/events/:eventId/tickets/:ticketId'),
-    __param(0, routing_controllers_1.Param('eventId')), __param(1, routing_controllers_1.Param('ticketId')), __param(2, routing_controllers_1.Body()), __param(3, routing_controllers_1.Req()),
+    __param(0, routing_controllers_1.Param('ticketId')), __param(1, routing_controllers_1.Body()), __param(2, routing_controllers_1.Req()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, Number, Object, Object]),
+    __metadata("design:paramtypes", [Number, Object, Object]),
     __metadata("design:returntype", Promise)
 ], TicketController.prototype, "updateTicket", null);
 __decorate([
     routing_controllers_1.Authorized(),
     routing_controllers_1.Delete('/events/:eventId/tickets/:ticketId'),
-    __param(0, routing_controllers_1.Param('eventId')), __param(1, routing_controllers_1.Param('ticketId')), __param(2, routing_controllers_1.Req()),
+    __param(0, routing_controllers_1.Param('ticketId')), __param(1, routing_controllers_1.Req()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, Number, Object]),
+    __metadata("design:paramtypes", [Number, Object]),
     __metadata("design:returntype", Promise)
 ], TicketController.prototype, "deleteTicket", null);
 TicketController = __decorate([

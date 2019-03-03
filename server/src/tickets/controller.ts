@@ -54,19 +54,18 @@ export default class TicketController {
 
     @Authorized()
     @Put('/events/:eventId/tickets/:ticketId')
-    async updateTicket(@Param('eventId') eventId: number, @Param('ticketId') ticketId: number, @Body() update: Partial<Ticket>, @Req() request: any) {
+    async updateTicket(@Param('ticketId') ticketId: number, @Body() update: Partial<Ticket>, @Req() request: any) {
+
         const user = await getConnection()
             .getRepository(User)
             .createQueryBuilder("user")
-            .leftJoinAndSelect("user.events", "event")
-            .leftJoinAndSelect("event.tickets", "ticket")
+            .leftJoinAndSelect("user.tickets", "ticket")
             .where("user.id = :id", {id: request.user.id})
-            .andWhere("event.id = :eventId", {eventId: eventId})
             .andWhere("ticket.id = :ticketId", {ticketId: ticketId})
             .getOne()
 
         if (user) {
-            const ticket = user.events[0].tickets[0];
+            const ticket = user.tickets[0];
             if (!ticket) {
                 throw new NotFoundError('Can not find ticket');
             } else {
@@ -78,22 +77,20 @@ export default class TicketController {
 
     @Authorized()
     @Delete('/events/:eventId/tickets/:ticketId')
-    async deleteTicket(@Param('eventId') eventId: number, @Param('ticketId') ticketId: number, @Req() request: any) {
+    async deleteTicket(@Param('ticketId') ticketId: number, @Req() request: any) {
 
         const user = await getConnection()
             .getRepository(User)
             .createQueryBuilder("user")
-            .leftJoinAndSelect("user.events", "event")
-            .leftJoinAndSelect("event.tickets", "ticket")
+            .leftJoinAndSelect("user.tickets", "ticket")
             .where("user.id = :id", {id: request.user.id})
-            .andWhere("event.id = :eventId", {eventId: eventId})
             .andWhere("ticket.id = :ticketId", {ticketId: ticketId})
             .getOne();
 
-        if (!user || user.events.length === 0 || user.events[0].tickets.length === 0) {
+        if (!user || !user.tickets[0] ) {
             throw new NotFoundError('Can not find ticket');
         } else {
-            return Ticket.delete(user.events[0].tickets[0]);
+            return Ticket.delete(user.tickets[0]);
         }
     }
 }
