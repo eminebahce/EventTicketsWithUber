@@ -16,13 +16,16 @@ export default function EventTicketsList(props) {
 
     return(
         <div className="container">
+            {!!props.auth !== "" &&
             <div className="row">
                 <Link to={`/createTicket/${props.eventId}`}>
                     <button className="btn btn-info mt-1 mb-4">Create Ticket</button>
                 </Link>
             </div>
+            }
+
             <div className="row">
-                {props.ticketeditMode && <TicketEditForm onSubmit={props.onSubmit}
+                {props.auth && props.ticketeditMode && <TicketEditForm onSubmit={props.onSubmit}
                                                          onChange={props.onChange}
                                                          values={props.values}
                 />}

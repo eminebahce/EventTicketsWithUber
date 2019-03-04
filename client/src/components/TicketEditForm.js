@@ -53,7 +53,7 @@ export default function TicketEditForm(props) {
                         />
                     </label>
                 </div>
-                <button type="submit">Edit Ticket</button>
+                <button className="btn btn-success" type="submit">Edit Ticket</button>
             </form>
         </div>
     )

@@ -65,7 +65,7 @@ export default function EventEditForm(props) {
                         />
                     </label>
                 </div>
-                <button type="submit">Edit Event</button>
+                <button className="btn btn-success" type="submit">Edit Event</button>
             </form>
         </div>
     )

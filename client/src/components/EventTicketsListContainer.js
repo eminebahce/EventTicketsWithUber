@@ -64,6 +64,7 @@ class EventTicketsListContainer extends React.Component{
                     onSubmit={this.onSubmit}
                     values={this.state.formValues}
                     ticketeditMode={this.state.ticketeditMode}
+                    auth={this.props.auth}
                 />
             </div>
         )
@@ -72,7 +73,8 @@ class EventTicketsListContainer extends React.Component{
 }
 
 const mapStateToProps =(state) =>({
-    tickets: state.postoperations.tickets
+    tickets: state.postoperations.tickets,
+    auth: state.auth
 });
 
 export default connect(mapStateToProps, {loadTickets, deleteTicket,updateTicket})(EventTicketsListContainer);

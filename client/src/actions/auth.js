@@ -1,4 +1,5 @@
 import request from 'superagent';
+import ls from 'local-storage'
 
 const baseUrl = 'http://localhost:4000';
 
@@ -8,7 +9,8 @@ export const login = (email, password) => {
             .post(`${baseUrl}/logins`)
             .send({email, password})
             .then(response => {
-                localStorage.setItem('user', response.body.jwt)
+                ls.set('user', response.body.jwt);
+                sessionStorage.setItem('user', response.body.jwt);
                 dispatch(loginsuccess(response.body.jwt))
             })
             .catch(error => console.error);

@@ -18,10 +18,18 @@ export default function EventsList(props) {
 
     return (
         <div className="container">
+
             <div className="row">
                 <Link to="/createEvent">
                     <button className="btn btn-info mt-1 mb-4">Create Event</button>
                 </Link>
+                <div className="ml-2"> {props.total !== 0 &&
+                <div>
+                    <p>
+                        <button className="btn btn-success mt-1 mb-4" onClick={() => props.onSkipPage(Math.ceil(props.total / 9))}>Next Page</button>
+                    </p>
+                </div>}
+                </div>
             </div>
             <div className="row">
                 {props.editMode && <EventEditForm onSubmit={props.onSubmit}
@@ -29,49 +37,48 @@ export default function EventsList(props) {
                                                   values={props.values}
                 />}
             </div>
-            {!props.editMode &&
             <div className="row">
-                {props.events && props.events.map((event) =>
-                    <div key={event.id} className='img-thumbnail mr-1 mb-4'>
-                        <div className="col-sm-5">
-                            <img className='img-responsive tile-img'
-                                 src={event.picture}/>
-                        </div>
-                        <div className="col-sm-7 tile">
-                            <div className='tile-info'>
-                                <div className="row">
-                                    <Link to={`/events/${event.id}/tickets`}><h1>{event.name}</h1></Link>
-                                </div>
-                                <div className="row">
-                                    <h5>{event.description}</h5>
-                                </div>
-                                <div className="row">
-                                    <h6>{formatDate(event.startDate)}</h6>
-                                </div>
-                                <div className="row">
-                                    <h6>{formatDate(event.endDate)}</h6>
-                                </div>
-                                <div className="row">
-                                    <button className="btn btn-danger btn-sm mt-1 mr-1" onClick={() => props.onDelete(event.id)}>X</button>
-                                    <button className="btn btn-info btn-sm mt-1 mr-1" onClick={() => props.onEdit(event)}>Edit</button>
+                {!props.editMode &&
+                <div className="row">
+                    {props.events && props.events.map((event) =>
+                        <div key={event.id} className='img-thumbnail mr-1 mb-4'>
+                            <div className="col-sm-5">
+                                <img className='img-responsive tile-img'
+                                     src={event.picture}/>
+                            </div>
+                            <div className="col-sm-7 tile">
+                                <div className='tile-info'>
+                                    <div className="row">
+                                        <Link to={`/events/${event.id}/tickets`}><h1>{event.name}</h1></Link>
+                                    </div>
+                                    <div className="row">
+                                        <h5>{event.description}</h5>
+                                    </div>
+                                    <div className="row">
+                                        <h6>{formatDate(event.startDate)}</h6>
+                                    </div>
+                                    <div className="row">
+                                        <h6>{formatDate(event.endDate)}</h6>
+                                    </div>
+                                    <div className="row">
+                                        <button className="btn btn-danger btn-sm mt-1 mr-1" onClick={() => props.onDelete(event.id)}>X</button>
+                                        <button className="btn btn-info btn-sm mt-1 mr-1" onClick={() => props.onEdit(event)}>Edit</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                    )}
+                </div>
+                }
+                <div>
+                    <div className="row">
+                        {!props.events && <li>Loading events...</li>}
                     </div>
-                )}
+                </div>
+                </div>
             </div>
-            }
-            <div className="row"> {props.total !== 0 &&
-            <div>
-                <p>
-                    <button className="btn btn-success mt-1 mb-4" onClick={() => props.onSkipPage(Math.ceil(props.total / 9))}>Next Page</button>
-                </p>
-            </div>}
-            </div>
-            <div className="row">
-                {!props.events && <li>Loading events...</li>}
-            </div>
-        </div>
+
+
     )
 }
 
