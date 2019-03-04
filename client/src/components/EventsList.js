@@ -5,6 +5,7 @@ import eventList from '../eventList.css';
 
 export default function EventsList(props) {
     //{event.picture}
+    //console.log(Object.keys(props.auth.auth).length);
 
     const formatDate = (date) => {
         const dateObject = new Date(date);
@@ -19,10 +20,16 @@ export default function EventsList(props) {
     return (
         <div className="container">
 
+            {Object.keys(props.auth.auth).length !== 0 &&
+
             <div className="row">
                 <Link to="/createEvent">
                     <button className="btn btn-info mt-1 mb-4">Create Event</button>
                 </Link>
+            </div>
+            }
+
+            <div className="row">
                 <div className="ml-2"> {props.total !== 0 &&
                 <div>
                     <p>
@@ -60,10 +67,12 @@ export default function EventsList(props) {
                                     <div className="row">
                                         <h6>{formatDate(event.endDate)}</h6>
                                     </div>
+                                    {Object.keys(props.auth.auth).length !== 0 &&
                                     <div className="row">
                                         <button className="btn btn-danger btn-sm mt-1 mr-1" onClick={() => props.onDelete(event.id)}>X</button>
                                         <button className="btn btn-info btn-sm mt-1 mr-1" onClick={() => props.onEdit(event)}>Edit</button>
                                     </div>
+                                    }
                                 </div>
                             </div>
                         </div>

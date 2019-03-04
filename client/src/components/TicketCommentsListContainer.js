@@ -21,6 +21,7 @@ class TicketCommentsListContainer extends React.Component{
                 eventId={this.props.match.params.id}
                 ticketId={this.props.match.params.ticketId}
                 onDelete={this.onDelete}
+                auth={this.props.auth}
             />
         );
     }
@@ -29,7 +30,8 @@ class TicketCommentsListContainer extends React.Component{
 const mapStateToProps = (state) => {
     //  console.log(state.postoperations.comments);
     return {
-        comments: state.postoperations.comments
+        comments: state.postoperations.comments,
+        auth:state.auth
     }
 };
 

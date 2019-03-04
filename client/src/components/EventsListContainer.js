@@ -78,6 +78,7 @@ class EventsListContainer extends React.Component {
                     editMode={this.state.editMode}
                     total={this.props.total}
                     onSkipPage={this.onLoadEvents}
+                    auth={this.props.auth}
                 />
             </div>
         )
@@ -87,7 +88,8 @@ class EventsListContainer extends React.Component {
 const mapStateToProps = (state) => {
     return {
         events: state.postoperations.events,
-        total: state.postoperations.totalEvents
+        total: state.postoperations.totalEvents,
+        auth:state.auth
     }
 };
 

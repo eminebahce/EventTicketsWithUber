@@ -16,7 +16,7 @@ export default function EventTicketsList(props) {
 
     return(
         <div className="container">
-            {!!props.auth !== "" &&
+            { Object.keys(props.auth.auth).length !== 0 &&
             <div className="row">
                 <Link to={`/createTicket/${props.eventId}`}>
                     <button className="btn btn-info mt-1 mb-4">Create Ticket</button>
@@ -49,10 +49,12 @@ export default function EventTicketsList(props) {
                                 <div className="row">
                                     <h6>{formatDate(ticket.endDate)}</h6>
                                 </div>
+                                {Object.keys(props.auth.auth).length !== 0 &&
                                 <div className="row">
                                     <button className="btn btn-danger btn-sm mt-1 mr-1"  onClick={() => props.onDelete(ticket.id)}>X</button>
                                     <button className="btn btn-info btn-sm mt-1 mr-1" onClick={() => props.onEdit(ticket)}>Edit</button>
                                 </div>
+                                }
                             </div>
                         </div>
                     </div>

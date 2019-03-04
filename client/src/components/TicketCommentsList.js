@@ -58,11 +58,13 @@ export default function TicketCommentsList(props) {
                                 <div className="row">
                                     <h6>{formatDate(comment.createDate)}</h6>
                                 </div>
+                                {Object.keys(props.auth.auth).length !== 0 &&
                                 <div className="row">
                                     <button className="btn btn-danger btn-sm mt-1 mr-1"
                                             onClick={() => props.onDelete(comment.id)}>X
                                     </button>
                                 </div>
+                                }
                             </div>
                         )}
                     </div>
